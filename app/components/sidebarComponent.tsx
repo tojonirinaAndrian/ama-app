@@ -1,0 +1,147 @@
+"use client";
+
+import {
+  HouseIcon,
+  UserListIcon,
+  CallBellIcon,
+  SignOutIcon,
+  InfoIcon,
+  ListIcon,
+  XIcon,
+} from "@phosphor-icons/react";
+
+import { Icon } from "@phosphor-icons/react";
+
+import { useSidebarStore } from "@/app/stores/sidebar-store";
+
+type ActivePage = "accueil" | "liste" | "presence" | "a-propos";
+
+const ACTIVE_STYLE = "bg-gray-100 !text-black";
+
+const menuItems = [
+  {
+    title: "MENU",
+    items: [
+      {
+        key: "accueil",
+        label: "Accueil",
+        icon: HouseIcon,
+      },
+      {
+        key: "liste",
+        label: "Liste des membres",
+        icon: UserListIcon,
+      },
+      {
+        key: "presence",
+        label: "Présence",
+        icon: CallBellIcon,
+      },
+    ],
+  },
+  {
+    title: "GENERAL",
+    items: [
+      {
+        key: "a-propos",
+        label: "À propos",
+        icon: InfoIcon,
+      },
+    ],
+  },
+] as const;
+
+interface NavItemProps {
+  active: boolean;
+  label: string;
+  icon: Icon;
+  onClick: () => void;
+}
+
+function NavItem({ active, label, icon: Icon, onClick }: NavItemProps) {
+  return (
+    <li
+      onClick={onClick}
+      className={`flex items-center gap-2 rounded-sm p-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-black ${
+        active ? ACTIVE_STYLE : ""
+      }`}
+    >
+      <Icon size={22} />
+      <span>{label}</span>
+    </li>
+  );
+}
+
+export default function SidebarComponent() {
+  const { activePage, setActivePage, menuOpen, toggleMenu, closeMenu } =
+    useSidebarStore();
+
+  const menu = (
+    <>
+      <div className="hidden xl:flex items-center gap-3 text-xl">
+        <div className="rounded-sm bg-blue-200 p-2">[LOGO]</div>
+
+        <h2 className="font-bold">AMA</h2>
+      </div>
+
+      {menuItems.map((section) => (
+        <div key={section.title} className="flex flex-col gap-2">
+          <p className="text-xs text-gray-700">{section.title}</p>
+
+          <ul className="flex flex-col gap-1">
+            {section.items.map((item) => (
+              <NavItem
+                active={activePage === item.key}
+                label={item.label}
+                icon={item.icon}
+                onClick={() => setActivePage(item.key)}
+                key={item.key}
+              />
+            ))}
+
+            {section.title === "GENERAL" && (
+              <li className="flex cursor-pointer items-center gap-2 rounded-sm p-3 py-2 text-red-500 hover:bg-red-100">
+                <SignOutIcon size={22} />
+                <span>Se déconnecter</span>
+              </li>
+            )}
+          </ul>
+        </div>
+      ))}
+    </>
+  );
+
+  return (
+    <>
+      <aside className="hidden h-screen w-[20%] flex-col gap-7 border-r border-gray-100 bg-gray-50/20 p-5 xl:flex">
+        {menu}
+      </aside>
+
+      <div className="relative flex w-full flex-col xl:hidden z-5">
+        <button
+          onClick={toggleMenu}
+          className="flex items-center gap-2 border-b border-gray-100 bg-white p-5"
+        >
+          {menuOpen ? (
+            <XIcon size={22} weight="bold" />
+          ) : (
+            <ListIcon size={22} weight="bold" />
+          )}
+
+          <span className="text-xl font-bold">Menu</span>
+        </button>
+
+        {menuOpen && (
+          <div className="flex flex-col gap-7 bg-white p-5">{menu}</div>
+        )}
+      </div>
+
+      {menuOpen && (
+        <div
+          onClick={closeMenu}
+          className="absolute inset-0 z-1 h-screen bg-black/55"
+        />
+      )}
+    </>
+  );
+}
