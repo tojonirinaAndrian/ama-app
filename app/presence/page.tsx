@@ -12,8 +12,8 @@ export default function Presence() {
   const choosedActionButtonStyle = "!text-black !border-b-black";
 
   return (
-    <>
-    HELLO presence
-    </>
+    <div>
+      <h2 className="font-semibold text-3xl">Présence</h2>
+    </div>
   );
 }
