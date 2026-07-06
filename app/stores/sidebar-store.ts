@@ -19,7 +19,9 @@ export const useSidebarStore = create<SidebarStore>((set) => ({
   activePage: "accueil",
 
   setActivePage: (page) =>
-    set({ activePage: page }),
+    set({ activePage: page,
+        menuOpen: false
+     }),
 
   menuOpen: false,
 

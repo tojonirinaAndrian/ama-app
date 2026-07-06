@@ -14,6 +14,8 @@ import { Icon } from "@phosphor-icons/react";
 
 import { useSidebarStore } from "@/app/stores/sidebar-store";
 
+import Link from "next/link";
+
 type ActivePage = "accueil" | "liste" | "presence" | "a-propos";
 
 const ACTIVE_STYLE = "bg-gray-100 !text-black";
@@ -26,16 +28,19 @@ const menuItems = [
         key: "accueil",
         label: "Accueil",
         icon: HouseIcon,
+        href: "/accueil"
       },
       {
         key: "liste",
         label: "Liste des membres",
         icon: UserListIcon,
+        href: "/liste"
       },
       {
         key: "presence",
         label: "Présence",
         icon: CallBellIcon,
+        href: "/presence"
       },
     ],
   },
@@ -46,6 +51,7 @@ const menuItems = [
         key: "a-propos",
         label: "À propos",
         icon: InfoIcon,
+        href: "/a-propos"
       },
     ],
   },
@@ -56,19 +62,21 @@ interface NavItemProps {
   label: string;
   icon: Icon;
   onClick: () => void;
+  href: string;
 }
 
-function NavItem({ active, label, icon: Icon, onClick }: NavItemProps) {
+function NavItem({ active, label, icon: Icon, onClick, href}: NavItemProps) {
   return (
-    <li
-      onClick={onClick}
-      className={`flex items-center gap-2 rounded-sm p-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-black ${
+    <Link
+    href={href}
+    onClick={onClick}
+    className={`flex items-center gap-2 rounded-sm p-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-black ${
         active ? ACTIVE_STYLE : ""
-      }`}
-    >
-      <Icon size={22} />
-      <span>{label}</span>
-    </li>
+    }`}
+>
+    <Icon size={22} />
+    <span>{label}</span>
+</Link>
   );
 }
 
@@ -95,6 +103,7 @@ export default function SidebarComponent() {
                 label={item.label}
                 icon={item.icon}
                 onClick={() => setActivePage(item.key)}
+                href={item.href}
                 key={item.key}
               />
             ))}
@@ -132,7 +141,7 @@ export default function SidebarComponent() {
         </button>
 
         {menuOpen && (
-          <div className="flex flex-col gap-7 bg-white p-5">{menu}</div>
+          <div className="flex flex-col gap-7 bg-white p-5 absolute w-full top-full">{menu}</div>
         )}
       </div>
 
