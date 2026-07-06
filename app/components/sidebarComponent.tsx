@@ -70,7 +70,7 @@ function NavItem({ active, label, icon: Icon, onClick, href}: NavItemProps) {
     <Link
     href={href}
     onClick={onClick}
-    className={`flex items-center gap-2 rounded-sm p-3 py-2 cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-black ${
+    className={`flex items-center gap-2 rounded-sm p-3 cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-black ${
         active ? ACTIVE_STYLE : ""
     }`}
 >
@@ -109,7 +109,7 @@ export default function SidebarComponent() {
             ))}
 
             {section.title === "GENERAL" && (
-              <li className="flex cursor-pointer items-center gap-2 rounded-sm p-3 py-2 text-red-500 hover:bg-red-100">
+              <li className="flex cursor-pointer items-center gap-2 rounded-sm p-3 text-red-500 hover:bg-red-100">
                 <SignOutIcon size={22} />
                 <span>Se déconnecter</span>
               </li>
