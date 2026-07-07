@@ -20,9 +20,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} h-[100vh] antialiased `}
+      className={`${spaceGrotesk.variable} h-dvh antialiased `}
     >
-      <body className="flex xl:flex-row flex-col h-[100vh]">
+      <body className="flex xl:flex-row flex-col h-dvh">
         <SidebarComponent />
         <div className="p-5 h-full w-full">
           {children}
