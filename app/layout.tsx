@@ -22,9 +22,9 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} antialiased `}
     >
-      <body className="flex xl:flex-row flex-col h-dvh">
+      <body className="flex xl:flex-row flex-col h-dvh text-sm md:text-base">
         <SidebarComponent />
-        <div className="flex flex-col p-5 py-3 h-full w-full overflow-auto">
+        <div className="flex flex-col p-5 py-4 h-full w-full overflow-auto">
           {children}
         </div>
       </body>

@@ -4,41 +4,54 @@ import { useEffect, useState } from "react";
 import { usePresenceStore } from "../stores/presence-store";
 
 export default function Presence() {
-  const {activeSection, setActiveSection} = usePresenceStore()
+  const { activeSection, setActiveSection } = usePresenceStore();
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('https://dummyjson.com/users');
-        console.log('Fetched users:', response.data.users);
-        setUsers(response.data.users);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-    fetchData();
+    // const fetchData = async () => {
+    //   try {
+    //     const response = await axios.get('https://dummyjson.com/users');
+    //     console.log('Fetched users:', response.data.users);
+    //     setUsers(response.data.users);
+    //   } catch (error) {
+    //     console.error('Error fetching data:', error);
+    //   }
+    // };
+    // fetchData();
   }, []);
 
   const ACTIVE_STYLE = "text-black! border-black!";
 
   return (
-    <div className="flex flex-col h-full gap-5">
-      <h2 className="font-semibold text-3xl">Présence</h2>
+    <div className="flex flex-col h-full gap-3 xl:gap-5">
+      <div className="flex flex-col gap-3">
+        <h2 className="font-semibold text-5xl hidden xl:block py-2">Présence</h2>
+        <p className="text-gray-500">
+          Confirmez ou vérifiez la présence des membres de la Chorale ici.
+        </p>
+      </div>
+      <div className="w-full h-px bg-gray-100"></div>
+      <div className="flex gap-2 items-center text-gray-700">
+        <p>Pour la date du</p>
+        <button className="font-semibold p-2 bg-gray-50/50 border-gray-100 rounded-md border hover:cursor-pointer">
+          25/05/26
+        </button>
+      </div>
       <div className="h-full overflow-y-auto flex flex-col border rounded-md border-gray-100">
         <div className="*:hover:cursor-pointer w-full flex *:w-full *:p-5 *:border-b-2 *:border-transparent font-semibold text-gray-400">
-          <button 
-          onClick={() => {
-            (activeSection !== "faire") && setActiveSection("faire")
-          }}
-          className={`${activeSection === "faire" && ACTIVE_STYLE}`}>
+          <button
+            onClick={() => {
+              activeSection !== "faire" && setActiveSection("faire");
+            }}
+            className={`${activeSection === "faire" && ACTIVE_STYLE}`}
+          >
             Faire la présence
           </button>
           <button
-           onClick={() => {
-            (activeSection !== "voir") && setActiveSection("voir")
-          }}
-          className={`${activeSection === "voir" && ACTIVE_STYLE}`}
+            onClick={() => {
+              activeSection !== "voir" && setActiveSection("voir");
+            }}
+            className={`${activeSection === "voir" && ACTIVE_STYLE}`}
           >
             Voir les présents
           </button>
