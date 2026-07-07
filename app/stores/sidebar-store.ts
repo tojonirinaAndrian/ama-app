@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export type ActivePage =
   | "accueil"
@@ -15,21 +16,32 @@ interface SidebarStore {
   closeMenu: () => void;
 }
 
-export const useSidebarStore = create<SidebarStore>((set) => ({
-  activePage: "accueil",
+export const useSidebarStore = create<SidebarStore>()(
+  persist(
+    (set) => ({
+      activePage: "accueil",
 
-  setActivePage: (page) =>
-    set({ activePage: page,
-        menuOpen: false
-     }),
+      setActivePage: (page) =>
+        set({
+          activePage: page,
+          menuOpen: false,
+        }),
 
-  menuOpen: false,
+      menuOpen: false,
 
-  toggleMenu: () =>
-    set((state) => ({
-      menuOpen: !state.menuOpen,
-    })),
+      toggleMenu: () =>
+        set((state) => ({
+          menuOpen: !state.menuOpen,
+        })),
 
-  closeMenu: () =>
-    set({ menuOpen: false }),
-}));
+      closeMenu: () =>
+        set({ menuOpen: false }),
+    }),
+    {
+      name: "sidebar-store",
+      partialize: (state) => ({
+        activePage: state.activePage,
+      }),
+    }
+  )
+);

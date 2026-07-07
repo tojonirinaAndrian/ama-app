@@ -15,8 +15,6 @@ import { Icon } from "@phosphor-icons/react";
 import { useSidebarStore } from "@/app/stores/sidebar-store";
 
 import Link from "next/link";
-import { useEffect } from "react";
-import { usePathname } from "next/navigation";
 
 type ActivePage = "accueil" | "liste" | "presence" | "a-propos";
 
@@ -84,19 +82,6 @@ function NavItem({ active, label, icon: Icon, onClick, href}: NavItemProps) {
 
 export default function SidebarComponent() {
   const { activePage, setActivePage, menuOpen, toggleMenu, closeMenu } = useSidebarStore();
-  const pathname = usePathname();
-
-  useEffect(() => {
-    if (pathname === "/accueil") {
-      setActivePage("accueil");
-    } else if (pathname === "/liste") {
-      setActivePage("liste");
-    } else if (pathname === "/presence") {
-      setActivePage("presence");
-    } else if (pathname === "/a-propos") {
-      setActivePage("a-propos");
-    }
-  }, [pathname]);
 
   const menu = (
     <>
