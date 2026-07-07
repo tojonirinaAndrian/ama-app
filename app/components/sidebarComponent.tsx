@@ -142,7 +142,7 @@ export default function SidebarComponent() {
       <div className="relative flex w-full flex-col xl:hidden z-5">
         <button
           onClick={toggleMenu}
-          className="flex items-center gap-2 border-b border-gray-100 bg-white p-5"
+          className="flex items-center gap-2 border-b border-gray-100 p-5 bg-white"
         >
           {menuOpen ? (
             <XIcon size={22} weight="bold" />
