@@ -135,7 +135,7 @@ export default function SidebarComponent() {
 
   return (
     <>
-      <aside className="hidden h-screen w-[20%] flex-col gap-7 border-r border-gray-100 bg-gray-50/20 p-5 xl:flex">
+      <aside className="hidden h-[100vh] w-[20%] flex-col gap-7 border-r border-gray-100 bg-gray-50/20 p-5 xl:flex">
         {menu}
       </aside>
 
@@ -161,7 +161,7 @@ export default function SidebarComponent() {
       {menuOpen && (
         <div
           onClick={closeMenu}
-          className="absolute inset-0 z-1 h-screen bg-black/55"
+          className="absolute inset-0 z-1 h-[100vh] bg-black/55"
         />
       )}
     </>
