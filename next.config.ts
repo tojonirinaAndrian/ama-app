@@ -6,10 +6,6 @@ module.exports = {
 module.exports = {
   allowedDevOrigins: ['192.168.1.141'],
 };
-module.exports = {
-  allowedDevOrigins: ['192.168.43.241'],
-};
-
 
 import type { NextConfig } from "next";
 
