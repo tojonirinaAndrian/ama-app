@@ -120,7 +120,7 @@ export default function SidebarComponent() {
 
   return (
     <>
-      <aside className="hidden h-dvh w-[20%] flex-col gap-7 border-r border-gray-100 bg-gray-50/20 p-5 xl:flex">
+      <aside className="hidden h-dvh min-w-70 w-[20%] flex-col gap-7 border-r border-gray-100 bg-gray-50/20 p-5 xl:flex">
         {menu}
       </aside>
 

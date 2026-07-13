@@ -22,7 +22,7 @@ export default function SearchComponent() {
     return <>
         <div className="p-5 flex flex-col">
             <div
-                className={`relative border flex gap-1 p-1 items-center rounded border-gray-200 bg-gray-50 ${isInputting && "outline outline-gray-500 bg-white"}`}>
+                className={`xl:w-[45%] relative border flex gap-1 p-1 items-center rounded border-gray-200 bg-gray-50 ${isInputting && "outline outline-gray-500 bg-white"}`}>
 
                 <div className="p-2.5 pr-1 cursor-text"
                     onClick={() => {
@@ -31,7 +31,6 @@ export default function SearchComponent() {
                     }}
                 >
                     <MagnifyingGlassIcon className="text-gray-500" size={24} />
-
                 </div>
                 <input type="text" className={` h-full w-full focus:outline-none ${!isInputting ? "text-gray-800" : "text-black"}`}
                     id="searchInput"
