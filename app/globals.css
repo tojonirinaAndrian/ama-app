@@ -57,6 +57,7 @@
 body {
   font-family: var(--font-display);
   letter-spacing: -4.3%;
+  transition: all 1.5s;
 }
 
 :root {
