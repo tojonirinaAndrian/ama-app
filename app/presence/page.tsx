@@ -5,7 +5,9 @@ import { useState } from "react";
 import { usePresenceStore } from "../stores/presence-store";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import CustomCalendar from "../components/customCalendar";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
+import DatePickerSection from "../components/presence/datePickerSectionComponent";
+
 import {
   DialogTrigger,
   DialogContent,
@@ -40,10 +42,7 @@ export default function Presence() {
       </div>
       <div className="w-full h-px bg-gray-100"></div>
       <div className="flex gap-2 items-center text-gray-700">
-        <p>Pour la date du</p>
-        <button className="font-semibold p-2 bg-gray-50/50 border-gray-100 rounded-md border hover:cursor-pointer">
-          25/05/26
-        </button>
+        <DatePickerSection />
       </div>
       <div className="h-full overflow-y-auto flex flex-col border rounded-md border-gray-100">
         <div className="*:hover:cursor-pointer w-full flex *:w-full *:p-5 *:border-b-2 *:border-transparent font-semibold text-gray-400">
@@ -60,70 +59,6 @@ export default function Presence() {
             Voir les présents
           </button>
         </div>
-        <DatePickerSection />
-      </div>
-    </div>
-  );
-}
-
-function DatePickerSection() {
-  const [actualDateFaire, setActualDateFaire] = useState<Date>(new Date());
-  const [membresPresents] = useState<MembreType[]>([]);
-
-  return (
-    <div className="flex justify-between w-full items-center">
-      <p className="text-gray-500">
-        {"Le "}
-        <span className="xl:font-semibold font-bold">
-          {actualDateFaire.toLocaleDateString("en-GB")}
-        </span>
-      </p>
-      <div className="not-xl:hidden">
-        <Popover>
-          <PopoverTrigger disabled={membresPresents.length > 0}>
-            <p
-              className="font-normal p-2 border-black text-black flex gap-2 items-center rounded-md cursor-pointer"
-            >
-              <CalendarIcon size={18} />
-              Modifier la date
-            </p>
-          </PopoverTrigger>
-          <PopoverContent align="end" className="p-0 border-0">
-            <CustomCalendar
-              currentlyChoosedDate={actualDateFaire}
-              setCurrentlyChoosedDate={setActualDateFaire}
-            />
-          </PopoverContent>
-        </Popover>
-      </div>
-      <div className="xl:hidden">
-        <Dialog>
-          <DialogTrigger disabled={membresPresents.length > 0}>
-            <span
-              className="font-normal p-2 border-black text-black flex gap-2 items-center rounded-md cursor-pointer"
-            >
-              <CalendarIcon size={18} />
-              Modifier la date
-            </span>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader className="text-left">
-              <DialogTitle className="font-bold">
-                Choisir une date
-              </DialogTitle>
-              <DialogDescription>
-                {"Le "}
-                <span className="xl:font-semibold font-bold">
-                  {actualDateFaire.toLocaleDateString("en-GB")}
-                </span>
-              </DialogDescription>
-            </DialogHeader>
-            <CustomCalendar
-              currentlyChoosedDate={actualDateFaire}
-              setCurrentlyChoosedDate={setActualDateFaire}
-            />
-          </DialogContent>
-        </Dialog>
       </div>
     </div>
   );

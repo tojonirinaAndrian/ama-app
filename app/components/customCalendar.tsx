@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 
 // Utility helpers for date comparisons
-const isSameDay = (d1: Date, d2: Date) => 
+const isSameDay = (d1: Date, d2: Date) =>
     d1.getDate() === d2.getDate() &&
     d1.getMonth() === d2.getMonth() &&
     d1.getFullYear() === d2.getFullYear();
@@ -15,7 +15,7 @@ const isToday = (date: Date) => isSameDay(date, new Date());
 const generateCalendarGrid = (year: number, month: number): Date[] => {
     // Get the first day of the targeted month
     const firstDayOfMonth = new Date(year, month, 1);
-    
+
     // Day of the week index (0 = Sunday, ..., 6 = Saturday). 
     // Shifting index to make Monday (Lun) index 0 instead of Sunday.
     const dayOfWeek = firstDayOfMonth.getDay();
@@ -42,7 +42,7 @@ interface CustomCalendarProps {
 
 export default function CustomCalendar({ currentlyChoosedDate, setCurrentlyChoosedDate }: CustomCalendarProps) {
     const today = useMemo(() => new Date(), []);
-    
+
     // State driving the currently viewed month view context
     const [viewDate, setViewDate] = useState<Date>(() => new Date(currentlyChoosedDate));
 
@@ -70,74 +70,88 @@ export default function CustomCalendar({ currentlyChoosedDate, setCurrentlyChoos
 
     // Determine if next navigation element should be disabled
     const isNextDisabled = currentMonth === today.getMonth() && currentYear === today.getFullYear();
+    const onTodayClick = () => {
+        
+        setViewDate(new Date(today.getFullYear(), today.getMonth()));
+        setCurrentlyChoosedDate(today);
+    }
 
     return (
-        <div className="w-full flex gap-1 flex-col border border-gray-300 rounded-md p-3 bg-white">
-            {/* Header Control Panel */}
-            <div className="flex justify-between items-center px-1">
-                <button
-                    onClick={handlePrevMonth}
-                    className="hover:bg-gray-100 p-2 rounded-md transition-colors duration-150 cursor-pointer"
-                >
-                    <CaretLeftIcon size={18} />
-                </button>
-                
-                <p className="font-bold xl:font-semibold select-none">
-                    {String(currentMonth + 1).padStart(2, '0')}/{currentYear}
-                </p>
-                
-                <button
-                    onClick={handleNextMonth}
-                    disabled={isNextDisabled}
-                    className={`p-2 rounded-md transition-colors duration-150 
-                        ${isNextDisabled 
-                            ? "opacity-20 cursor-not-allowed" 
-                            : "hover:bg-gray-100 cursor-pointer"
-                        }`}
-                >
-                    <CaretRightIcon size={18} />
-                </button>
-            </div>
+        <div className="flex flex-col gap-2 xl:p-3">
+            <div className="w-full flex gap-1 flex-col border border-gray-300 rounded-md p-3 bg-white">
+                {/* Header Control Panel */}
+                <div className="flex justify-between items-center px-1">
+                    <button
+                        onClick={handlePrevMonth}
+                        className="hover:bg-gray-100 p-2 rounded-md transition-colors duration-150 cursor-pointer"
+                    >
+                        <CaretLeftIcon size={18} />
+                    </button>
 
-            {/* Calendar Weekday Names */}
-            <div className="grid grid-cols-7 text-center text-sm font-medium text-gray-500 capitalize py-2">
-                {DAYS_OF_WEEK.map((day) => (
-                    <span key={day} className="select-none">{day}</span>
-                ))}
-            </div>
+                    <p className="font-bold xl:font-semibold select-none">
+                        {String(currentMonth + 1).padStart(2, '0')}/{currentYear}
+                    </p>
 
-            {/* Interactive Grid Cell Items */}
-            <div className="grid grid-cols-7 gap-1">
-                {calendarGrid.map((day, i) => {
-                    const isCurrentMonth = day.getMonth() === currentMonth;
-                    const isSelected = isSameDay(day, currentlyChoosedDate);
-                    const isFuture = day > today;
+                    <button
+                        onClick={handleNextMonth}
+                        disabled={isNextDisabled}
+                        className={`p-2 rounded-md transition-colors duration-150 
+                        ${isNextDisabled
+                                ? "opacity-20 cursor-not-allowed"
+                                : "hover:bg-gray-100 cursor-pointer"
+                            }`}
+                    >
+                        <CaretRightIcon size={18} />
+                    </button>
+                </div>
 
-                    // Cleanly hide dates tracking further out than current active calendar timeline
-                    if (isFuture) {
-                        return <div key={i} aria-hidden="true" />;
-                    }
+                {/* Calendar Weekday Names */}
+                <div className="grid grid-cols-7 text-center text-sm font-medium text-gray-400 capitalize py-2">
+                    {DAYS_OF_WEEK.map((day) => (
+                        <span key={day} className="select-none">{day}</span>
+                    ))}
+                </div>
 
-                    return (
-                        <button
-                            key={i}
-                            disabled={isFuture}
-                            onClick={() => setCurrentlyChoosedDate(day)}
-                            className={`
-                                p-2.5 flex items-center justify-center rounded-md text-sm font-medium transition-all duration-150
-                                ${isSelected 
-                                    ? "bg-black text-white font-bold" 
-                                    : "hover:bg-gray-100 text-gray-900"
-                                }
-                                ${!isCurrentMonth && !isSelected ? "text-gray-400 font-normal" : ""}
-                                ${isToday(day) && !isSelected ? "ring-2 ring-blue-500 ring-offset-1" : ""}
+                {/* Interactive Grid Cell Items */}
+                <div className="grid grid-cols-7 gap-1">
+                    {calendarGrid.map((day, i) => {
+                        const isCurrentMonth = day.getMonth() === currentMonth;
+                        const isSelected = isSameDay(day, currentlyChoosedDate);
+                        const isFuture = day > today;
+
+                        // Cleanly hide dates tracking further out than current active calendar timeline
+                        if (isFuture) {
+                            return <div key={i} aria-hidden="true" />;
+                        }
+
+                        return (
+                            <button
+                                key={i}
+                                disabled={isFuture}
+                                onClick={() => setCurrentlyChoosedDate(day)}
+                                className={`
+                                p-2.5 flex items-center justify-center rounded-md text-sm font-medium transition-all duration-100
+                                ${isSelected
+                                        ? "bg-black text-white"
+                                        : "hover:bg-gray-100 text-black"
+                                    }
+                                ${!isCurrentMonth && !isSelected ? "text-gray-400" : ""}
+                                ${isToday(day) && !isSelected ? "ring-2 ring-gray-100 ring-offset-1" : ""}
                             `}
-                        >
-                            {day.getDate()}
-                        </button>
-                    );
-                })}
+                            >
+                                {String(day.getDate()).length === 1 && "0"}
+                                {day.getDate()}
+                            </button>
+                        );
+                    })}
+                </div>
             </div>
+            <button onClick={onTodayClick}
+                className="p-3 font-semibold border border-gray-500 rounded"
+            >
+                {"Aujourd'hui"}
+            </button>
         </div>
+
     );
 }
