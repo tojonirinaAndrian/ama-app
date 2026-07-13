@@ -13,6 +13,8 @@ export default function SearchComponent() {
         searchElement?.addEventListener("focusout", () => {
             setIsInputting(false)
         });
+        
+        //TODO: add ctrl+k search feature
         window.addEventListener("keypress", (e) => {
             // console.log(e.coe)
             if (e.code === "KeyK" && e.ctrlKey) {
