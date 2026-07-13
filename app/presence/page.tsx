@@ -1,29 +1,9 @@
 "use client";
 
-import { CalendarIcon } from "@phosphor-icons/react";
-import { useState } from "react";
 import { usePresenceStore } from "../stores/presence-store";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import CustomCalendar from "../components/customCalendar";
 // import { Button } from "@/components/ui/button";
 import DatePickerSection from "../components/presence/datePickerSectionComponent";
-
-import {
-  DialogTrigger,
-  DialogContent,
-  DialogTitle,
-  Dialog,
-  DialogHeader,
-  DialogDescription,
-} from "@/components/ui/dialog";
-
-type MembreType = {
-  id: number;
-  cheminImage: string;
-  nom: string;
-  prenoms: string;
-  pourcentage: number;
-};
+import SearchComponent from "../components/presence/searchComponent";
 
 const ACTIVE_STYLE = "text-black! border-black!";
 
@@ -59,6 +39,7 @@ export default function Presence() {
             Voir les présents
           </button>
         </div>
+        <SearchComponent />
       </div>
     </div>
   );
