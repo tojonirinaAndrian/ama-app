@@ -126,16 +126,19 @@ export default function SidebarComponent() {
 
       <div className="relative flex w-full flex-col xl:hidden z-5">
         <button
-          onClick={toggleMenu}
-          className="flex items-center gap-2 border-b border-gray-100 p-5 bg-white"
+          className="border-b border-gray-100 p-5 bg-white"
         >
+          <div className="flex items-center gap-2 w-fit"
+          onClick={toggleMenu}>
           {menuOpen ? (
             <XIcon size={22} weight="bold" />
           ) : (
             <ListIcon size={22} weight="bold" />
           )}
 
-          <span className="text-xl font-bold">Menu</span>
+          <span className="text-xl font-bold">Menu</span>  
+          </div>
+          
         </button>
 
         {menuOpen && (
