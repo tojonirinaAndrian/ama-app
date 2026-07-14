@@ -147,7 +147,7 @@ export default function CustomCalendar({ currentlyChoosedDate, setCurrentlyChoos
                 </div>
             </div>
             <button onClick={onTodayClick}
-                className="p-3 font-semibold border border-gray-500 rounded"
+                className="p-3 cursor-pointer font-semibold border border-gray-500 rounded"
             >
                 {"Aujourd'hui"}
             </button>
