@@ -2,8 +2,6 @@
 
 import { useState, useMemo } from "react";
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
-import { PopoverClose } from "@base-ui/react";
-import { DialogClose } from "@/components/ui/dialog";
 
 // Utility helpers for date comparisons
 const isSameDay = (d1: Date, d2: Date) =>
