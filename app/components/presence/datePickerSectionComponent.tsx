@@ -14,17 +14,16 @@ import {
 import { CalendarIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
-type MembreType = {
-  id: number;
-  cheminImage: string;
-  nom: string;
-  prenoms: string;
-  pourcentage: number;
-};
+// type MembreType = {
+//   id: number;
+//   cheminImage: string;
+//   nom: string;
+//   prenoms: string;
+//   pourcentage: number;
+// };
 
 export default function DatePickerSection() {
   const [actualDateFaire, setActualDateFaire] = useState<Date>(new Date());
-  const [membresPresents] = useState<MembreType[]>([]);
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   return (
@@ -37,7 +36,9 @@ export default function DatePickerSection() {
       </p>
       <div className="not-xl:hidden">
         <Popover>
-          <PopoverTrigger disabled={membresPresents.length > 0}>
+          <PopoverTrigger 
+          // disabled={membresPresents.length > 0}
+          >
             <p
               className="p-2 border-gray-600 text-black border flex gap-2 items-center rounded-md cursor-pointer"
             >
@@ -57,7 +58,9 @@ export default function DatePickerSection() {
       </div>
       <div className="xl:hidden">
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogTrigger disabled={membresPresents.length > 0}>
+          <DialogTrigger 
+          // disabled={membresPresents.length > 0}
+          >
             <span
               className="p-2 border-gray-600 border text-black flex gap-2 items-center rounded-md cursor-pointer"
             >
