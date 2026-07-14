@@ -37,15 +37,15 @@ const DAYS_OF_WEEK = ['Lun', "Mar", "mer", "jeu", "ven", "Sam", "Dim"];
 
 interface CustomCalendarProps {
     closeDialog?: () => void;
-    currentlyChoosedDate: Date;
-    setCurrentlyChoosedDate: (date: Date) => void;
+    currentlyChosenDate: Date;
+    setCurrentlyChosenDate: (date: Date) => void;
 }
 
-export default function CustomCalendar({ closeDialog, currentlyChoosedDate, setCurrentlyChoosedDate }: CustomCalendarProps) {
+export default function CustomCalendar({ closeDialog, currentlyChosenDate, setCurrentlyChosenDate }: CustomCalendarProps) {
     const today = useMemo(() => new Date(), []);
 
     // State driving the currently viewed month view context
-    const [viewDate, setViewDate] = useState<Date>(() => new Date(currentlyChoosedDate));
+    const [viewDate, setViewDate] = useState<Date>(() => new Date(currentlyChosenDate));
 
     const currentYear = viewDate.getFullYear();
     const currentMonth = viewDate.getMonth();
@@ -74,7 +74,7 @@ export default function CustomCalendar({ closeDialog, currentlyChoosedDate, setC
     const onTodayClick = () => {
 
         setViewDate(new Date(today.getFullYear(), today.getMonth()));
-        setCurrentlyChoosedDate(today);
+        setCurrentlyChosenDate(today);
     }
 
     return (
@@ -117,7 +117,7 @@ export default function CustomCalendar({ closeDialog, currentlyChoosedDate, setC
                 <div className="grid grid-cols-7 gap-1">
                     {calendarGrid.map((day, i) => {
                         const isCurrentMonth = day.getMonth() === currentMonth;
-                        const isSelected = isSameDay(day, currentlyChoosedDate);
+                        const isSelected = isSameDay(day, currentlyChosenDate);
                         const isFuture = day > today;
 
                         // Cleanly hide dates tracking further out than current active calendar timeline
@@ -129,7 +129,7 @@ export default function CustomCalendar({ closeDialog, currentlyChoosedDate, setC
                             <button
                                 key={i}
                                 disabled={isFuture}
-                                onClick={() => setCurrentlyChoosedDate(day)}
+                                onClick={() => setCurrentlyChosenDate(day)}
                                 className={`
                                 p-2.5 flex items-center justify-center rounded-md text-sm font-medium transition-all duration-100
                                 ${isSelected

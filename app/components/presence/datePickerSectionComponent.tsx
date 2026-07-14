@@ -48,8 +48,8 @@ export default function DatePickerSection() {
           <PopoverContent align="end" className="p-0 border-0">
             <CustomCalendar
               
-              currentlyChoosedDate={actualDateFaire}
-              setCurrentlyChoosedDate={setActualDateFaire}
+              currentlyChosenDate={actualDateFaire}
+              setCurrentlyChosenDate={setActualDateFaire}
             />
 
           </PopoverContent>
@@ -79,8 +79,8 @@ export default function DatePickerSection() {
             </DialogHeader>
             <CustomCalendar
               closeDialog={() => setDialogOpen(false)}
-              currentlyChoosedDate={actualDateFaire}
-              setCurrentlyChoosedDate={setActualDateFaire}
+              currentlyChosenDate={actualDateFaire}
+              setCurrentlyChosenDate={setActualDateFaire}
             />
           </DialogContent>
         </Dialog>

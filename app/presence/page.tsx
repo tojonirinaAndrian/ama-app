@@ -40,6 +40,7 @@ export default function Presence() {
           </button>
         </div>
         <SearchComponent />
+        {/* TODO: Add mock users */}
       </div>
     </div>
   );
