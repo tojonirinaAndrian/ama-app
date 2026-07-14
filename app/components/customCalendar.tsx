@@ -2,6 +2,8 @@
 
 import { useState, useMemo } from "react";
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
+import { PopoverClose } from "@base-ui/react";
+import { DialogClose } from "@/components/ui/dialog";
 
 // Utility helpers for date comparisons
 const isSameDay = (d1: Date, d2: Date) =>
@@ -40,7 +42,7 @@ interface CustomCalendarProps {
     setCurrentlyChoosedDate: (date: Date) => void;
 }
 
-export default function CustomCalendar({ currentlyChoosedDate, setCurrentlyChoosedDate }: CustomCalendarProps) {
+export default function CustomCalendar({currentlyChoosedDate, setCurrentlyChoosedDate }: CustomCalendarProps) {
     const today = useMemo(() => new Date(), []);
 
     // State driving the currently viewed month view context
@@ -71,7 +73,7 @@ export default function CustomCalendar({ currentlyChoosedDate, setCurrentlyChoos
     // Determine if next navigation element should be disabled
     const isNextDisabled = currentMonth === today.getMonth() && currentYear === today.getFullYear();
     const onTodayClick = () => {
-        
+
         setViewDate(new Date(today.getFullYear(), today.getMonth()));
         setCurrentlyChoosedDate(today);
     }
@@ -146,11 +148,20 @@ export default function CustomCalendar({ currentlyChoosedDate, setCurrentlyChoos
                     })}
                 </div>
             </div>
-            <button onClick={onTodayClick}
-                className="p-3 cursor-pointer font-semibold border border-gray-500 rounded"
-            >
-                {"Aujourd'hui"}
-            </button>
+            <div className="flex gap-1 w-full *:w-full">
+                <button onClick={onTodayClick}
+                    className="p-3 cursor-pointer font-semibold border border-gray-500 rounded"
+                >
+                    {"Aujourd'hui"}
+                </button>
+                <button 
+                    className="xl:hidden p-3 cursor-pointer font-semibold border border-gray-500 rounded"
+                >
+                    {"Confirmer"}
+                </button>
+                
+            </div>
+
         </div>
 
     );

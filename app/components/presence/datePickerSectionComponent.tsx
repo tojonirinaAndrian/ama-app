@@ -10,9 +10,11 @@ import {
   Dialog,
   DialogHeader,
   DialogDescription,
+  DialogClose,
 } from "@/components/ui/dialog";
 import { CalendarIcon } from "@phosphor-icons/react";
 import { useState } from "react";
+import { PopoverClose } from "@base-ui/react";
 
 type MembreType = {
   id: number;
@@ -46,6 +48,7 @@ export default function DatePickerSection() {
           </PopoverTrigger>
           <PopoverContent align="end" className="p-0 border-0">
             <CustomCalendar
+              
               currentlyChoosedDate={actualDateFaire}
               setCurrentlyChoosedDate={setActualDateFaire}
             />
@@ -78,6 +81,7 @@ export default function DatePickerSection() {
               currentlyChoosedDate={actualDateFaire}
               setCurrentlyChoosedDate={setActualDateFaire}
             />
+
           </DialogContent>
         </Dialog>
       </div>

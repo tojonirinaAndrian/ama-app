@@ -20,7 +20,7 @@ export default function Presence() {
           Confirmez ou vérifiez la présence des membres de la Chorale ici.
         </p>
       </div>
-      <div className="w-full h-px bg-gray-100"></div>
+      <div className="w-full h-px bg-gray-100 not-xl:hidden"></div>
       <div className="flex gap-2 items-center text-gray-700">
         <DatePickerSection />
       </div>
