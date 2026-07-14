@@ -4,6 +4,7 @@ import { usePresenceStore } from "../stores/presence-store";
 // import { Button } from "@/components/ui/button";
 import DatePickerSection from "../components/presence/datePickerSectionComponent";
 import SearchComponent from "../components/presence/searchComponent";
+import VoicePickerComponent from "../components/presence/voiceFilterComponent";
 
 const ACTIVE_STYLE = "text-black! border-black!";
 
@@ -39,7 +40,12 @@ export default function Presence() {
             Voir les présents
           </button>
         </div>
-        <SearchComponent />
+        <div className="p-2 flex flex-col w-full">
+          <div className="flex not-md:flex-col gap-1 w-full">
+            <VoicePickerComponent />
+            <SearchComponent />
+          </div>
+        </div>
         {/* TODO: Add mock users */}
       </div>
     </div>

@@ -24,8 +24,8 @@ import { useState } from "react";
 
 export default function DatePickerSection() {
   const [actualDateFaire, setActualDateFaire] = useState<Date>(new Date());
+  const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-
   return (
     <div className="flex gap-4 w-full items-center">
       <p className="text-gray-500">
@@ -35,9 +35,10 @@ export default function DatePickerSection() {
         </span>
       </p>
       <div className="not-xl:hidden">
-        <Popover>
-          <PopoverTrigger 
-          // disabled={membresPresents.length > 0}
+        <Popover open={popoverOpen}>
+          <PopoverTrigger
+            // disabled={membresPresents.length > 0}
+            onClick={() => setPopoverOpen(!popoverOpen)}
           >
             <p
               className="p-2 border-gray-600 text-black border flex gap-2 items-center rounded-md cursor-pointer"
@@ -48,7 +49,7 @@ export default function DatePickerSection() {
           </PopoverTrigger>
           <PopoverContent align="end" className="p-0 border-0">
             <CustomCalendar
-              
+              closeComponent={() => setPopoverOpen(false)}
               currentlyChosenDate={actualDateFaire}
               setCurrentlyChosenDate={setActualDateFaire}
             />
@@ -58,7 +59,7 @@ export default function DatePickerSection() {
       </div>
       <div className="xl:hidden">
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogTrigger 
+          <DialogTrigger
           // disabled={membresPresents.length > 0}
           >
             <span
@@ -81,7 +82,7 @@ export default function DatePickerSection() {
               </DialogDescription>
             </DialogHeader>
             <CustomCalendar
-              closeDialog={() => setDialogOpen(false)}
+              closeComponent={() => setDialogOpen(false)}
               currentlyChosenDate={actualDateFaire}
               setCurrentlyChosenDate={setActualDateFaire}
             />

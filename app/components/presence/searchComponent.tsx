@@ -38,37 +38,34 @@ export default function SearchComponent() {
         setUserInput("");
     };
     return <>
-        <div className="p-5 flex flex-col">
-            <div
-                className={`xl:w-[45%] md:w-[60%] relative border flex gap-1 p-1 items-center rounded border-gray-200 bg-gray-50 ${isInputting && "outline outline-gray-500 bg-white"}`}>
+        <div
+            className={`w-full xl:w-[45%] md:w-[60%] relative border flex gap-1 p-1 items-center rounded border-gray-200 bg-gray-50 ${isInputting && "outline outline-gray-500 bg-white"}`}>
 
-                <div className="p-2.5 pr-1 cursor-text"
-                    onClick={() => {
-                        searchInputRef.current?.focus();
-                    }}
-                >
-                    <MagnifyingGlassIcon className="text-gray-500" size={24} />
-                </div>
-                <input type="text" className={`z-1 h-full w-full focus:outline-none ${!isInputting ? "text-gray-800" : "text-black"}`}
-                    id="searchInput"
-                    ref={searchInputRef}
-                    placeholder="Rechercher un membre..."
-                    onChange={(e) => {
-                        setUserInput(e.target.value)
-                    }}
-                />
-                {(userInput.length >= 1) ? <button
-                    onClick={onCancelClick}
-                    className="cursor-pointer w-fit flex gap-2 px-3 items-center bg-white border rounded p-2 border-gray-300">
-                    <BackspaceIcon size={18} />
-                    <span className="">
-                        Annuler
-                    </span>
-                </button> : (!isInputting) && <span className="absolute right-4 text-gray-400">
-                    ctrl+K
-                </span>}
+            <div className="p-1.5 pr-1 cursor-text"
+                onClick={() => {
+                    searchInputRef.current?.focus();
+                }}
+            >
+                <MagnifyingGlassIcon className="text-gray-500" size={24} />
             </div>
-            <p>{userInput}</p>
+            <input type="text" className={`z-1 h-full w-full focus:outline-none ${!isInputting ? "text-gray-800" : "text-black"}`}
+                id="searchInput"
+                ref={searchInputRef}
+                placeholder="Rechercher un membre..."
+                onChange={(e) => {
+                    setUserInput(e.target.value)
+                }}
+            />
+            {(userInput.length >= 1) ? <button
+                onClick={onCancelClick}
+                className="cursor-pointer w-fit flex gap-2 px-3 items-center bg-white border rounded p-2 border-gray-300">
+                <BackspaceIcon size={18} />
+                <span className="">
+                    Annuler
+                </span>
+            </button> : (!isInputting) && <span className="not-md:hidden absolute right-4 text-gray-400">
+                ctrl+K
+            </span>}
         </div>
     </>
 }
