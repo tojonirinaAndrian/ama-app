@@ -1,10 +1,12 @@
 'use client';
 import { MagnifyingGlassIcon, BackspaceIcon } from "@phosphor-icons/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export default function SearchComponent() {
     const [isInputting, setIsInputting] = useState<boolean>(false);
     const [userInput, setUserInput] = useState<string>("");
+    const searchInputRef = useRef<HTMLInputElement>(null);
+
     useEffect(() => {
         const searchElement = document.getElementById("searchInput");
         searchElement?.addEventListener("focusin", () => {
@@ -13,15 +15,21 @@ export default function SearchComponent() {
         searchElement?.addEventListener("focusout", () => {
             setIsInputting(false)
         });
-        
+
         //TODO: add ctrl+k search feature
-        window.addEventListener("keypress", (e) => {
-            // console.log(e.coe)
-            if (e.code === "KeyK" && e.ctrlKey) {
-                e.preventDefault();
-                console.log(e.code);
-            }}
-        )
+        const handleKeyDown = (e: KeyboardEvent) => {
+            // Ctrl + K (Windows/Linux) or Cmd + K (Mac)
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+                e.preventDefault(); // Prevent browser search/address bar behavior
+                searchInputRef.current?.focus();
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
     }, []);
     const onCancelClick = () => {
         const searchElement: HTMLInputElement = document.getElementById("searchInput") as HTMLInputElement;
@@ -36,14 +44,14 @@ export default function SearchComponent() {
 
                 <div className="p-2.5 pr-1 cursor-text"
                     onClick={() => {
-                        const searchElement: HTMLInputElement = document.getElementById("searchInput") as HTMLInputElement;
-                        searchElement.focus();
+                        searchInputRef.current?.focus();
                     }}
                 >
                     <MagnifyingGlassIcon className="text-gray-500" size={24} />
                 </div>
                 <input type="text" className={`z-1 h-full w-full focus:outline-none ${!isInputting ? "text-gray-800" : "text-black"}`}
                     id="searchInput"
+                    ref={searchInputRef}
                     placeholder="Rechercher un membre..."
                     onChange={(e) => {
                         setUserInput(e.target.value)
