@@ -36,11 +36,12 @@ const generateCalendarGrid = (year: number, month: number): Date[] => {
 const DAYS_OF_WEEK = ['Lun', "Mar", "mer", "jeu", "ven", "Sam", "Dim"];
 
 interface CustomCalendarProps {
+    closeDialog?: () => void;
     currentlyChoosedDate: Date;
     setCurrentlyChoosedDate: (date: Date) => void;
 }
 
-export default function CustomCalendar({currentlyChoosedDate, setCurrentlyChoosedDate }: CustomCalendarProps) {
+export default function CustomCalendar({ closeDialog, currentlyChoosedDate, setCurrentlyChoosedDate }: CustomCalendarProps) {
     const today = useMemo(() => new Date(), []);
 
     // State driving the currently viewed month view context
@@ -152,12 +153,11 @@ export default function CustomCalendar({currentlyChoosedDate, setCurrentlyChoose
                 >
                     {"Aujourd'hui"}
                 </button>
-                <button 
+                <button
                     className="xl:hidden p-3 cursor-pointer font-semibold border border-gray-500 rounded"
-                >
-                    {"Confirmer"}
+                    onClick={closeDialog}>
+                    Confirmer
                 </button>
-                
             </div>
 
         </div>
