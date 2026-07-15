@@ -1,6 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
+import Image from 'next/image';
 
 type MemberType = {
   id: number;
@@ -51,7 +52,7 @@ type MemberComponentProps = {
 function MemberComponent({ member }: MemberComponentProps) {
   return (
     <div className="w-full border rounded p-3 flex gap-2 items-center">
-      <img
+      <Image
         src={member.image}
         alt={member.name}
         className="w-14 h-14 rounded-full object-cover"
