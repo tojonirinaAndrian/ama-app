@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import {
   HouseIcon,
   UserListIcon,
@@ -81,7 +83,23 @@ function NavItem({ active, label, icon: Icon, onClick, href}: NavItemProps) {
 }
 
 export default function SidebarComponent() {
+  const pathname = usePathname();
   const { activePage, setActivePage, menuOpen, toggleMenu, closeMenu } = useSidebarStore();
+
+  useEffect(() => {
+    // Map pathname to menu item key
+    const pathToPageMap: Record<string, "accueil" | "liste" | "presence" | "a-propos"> = {
+      "/accueil": "accueil",
+      "/liste": "liste",
+      "/presence": "presence",
+      "/a-propos": "a-propos",
+    };
+
+    const page = pathToPageMap[pathname];
+    if (page) {
+      setActivePage(page);
+    }
+  }, [pathname, setActivePage]);
 
   const menu = (
     <>
