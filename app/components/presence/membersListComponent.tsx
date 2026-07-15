@@ -4,6 +4,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useDebounce } from 'use-debounce';
 import Image from 'next/image';
 import { usePresenceStore } from '@/app/stores/presence-store';
+import { useRef, useEffect } from 'react'; // 1. Import useRef and useEffect
 
 type MemberType = {
     id: number;
@@ -90,9 +91,10 @@ function MemberComponent({ member }: { member: MemberType }) {
 
 export default function MembersListComponent() {
     const { searchInput } = usePresenceStore();
-
-    // 1. Debounce the search input to limit API calls while typing
     const [debouncedSearch] = useDebounce(searchInput, 500);
+
+    // 2. Create a reference to the scrollable container
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const {
         data,
@@ -102,28 +104,30 @@ export default function MembersListComponent() {
         isLoading,
         error,
     } = useInfiniteQuery({
-        // Query relies on the debounced value, preventing immediate spam
         queryKey: ['members', debouncedSearch],
-
         initialPageParam: 0,
-
         queryFn: ({ pageParam }) => {
             return getMembers({ pageParam, search: debouncedSearch });
         },
-
-        // 2. Robust page verification logic to hide "Voir plus" precisely
         getNextPageParam: (lastPage) => {
-            // Guard: If we receive an empty array or fewer items than the limit, we are at the end
             if (!lastPage.members || lastPage.members.length < lastPage.limit) {
                 return undefined;
             }
-
             const nextSkip = lastPage.skip + lastPage.limit;
             return nextSkip < lastPage.total ? nextSkip : undefined;
         },
-
         staleTime: 1000 * 60 * 5,
     });
+
+    // 3. Reset scroll to top whenever the search query changes
+    useEffect(() => {
+        if (containerRef.current) {
+            containerRef.current.scrollTop = 0; 
+            
+            // Optional: If you prefer a smooth scroll effect, use this instead:
+            // containerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }, [debouncedSearch]);
 
     const members = data?.pages.flatMap((page) => page.members) ?? [];
 
@@ -136,12 +140,15 @@ export default function MembersListComponent() {
     }
 
     return (
-        <div className="h-full border rounded overflow-auto flex flex-col gap-2 p-2.5 md:p-3">
+        /* 4. Attach the ref to this overflow-auto element */
+        <div 
+            ref={containerRef} 
+            className="h-full border rounded overflow-auto flex flex-col gap-2 p-2.5 md:p-3"
+        >
             {members.map((member) => (
                 <MemberComponent key={member.id} member={member} />
             ))}
 
-            {/* 3. Conditional rendering check ensures list contains items before showing the button */}
             {hasNextPage && members.length > 0 && (
                 <button
                     onClick={() => fetchNextPage()}
