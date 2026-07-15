@@ -1,8 +1,7 @@
 'use client';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect } from 'react'; // NEW
-import { useInView } from 'react-intersection-observer'; // NEW
+import { useDebounce } from 'use-debounce'; // New dependency
 import Image from 'next/image';
 import { usePresenceStore } from '@/app/stores/presence-store';
 
@@ -102,14 +101,8 @@ function MemberComponent({ member }: { member: MemberType }) {
 export default function MembersListComponent() {
     const { searchInput } = usePresenceStore();
 
-    // NEW: create a watcher element
-    const {
-        ref,
-        inView,
-    } = useInView({
-        threshold: 0,
-    });
-
+    const [debouncedSearch] = useDebounce(searchInput, 500);
+    
     const {
         data,
         fetchNextPage,
@@ -118,12 +111,12 @@ export default function MembersListComponent() {
         isLoading,
         error,
     } = useInfiniteQuery({
-        queryKey: ['members', searchInput],
+        queryKey: ['members', debouncedSearch],
 
         initialPageParam: 0,
 
         queryFn: ({pageParam}) => {
-            return getMembers({pageParam, search: searchInput})
+            return getMembers({pageParam, search: debouncedSearch})
         },
 
         getNextPageParam: (lastPage) => {
@@ -137,18 +130,6 @@ export default function MembersListComponent() {
 
         staleTime: 1000 * 60 * 5,
     });
-
-    // NEW: trigger loading when bottom is visible
-    useEffect(() => {
-        if (inView && hasNextPage && !isFetchingNextPage) {
-            fetchNextPage();
-        }
-    }, [
-        inView,
-        hasNextPage,
-        isFetchingNextPage,
-        fetchNextPage,
-    ]);
 
     const members =
         data?.pages.flatMap(
@@ -175,15 +156,15 @@ export default function MembersListComponent() {
                 />
             ))}
 
-
-            {/* NEW: invisible trigger at the bottom */}
-            <div ref={ref} className="h-5">
-                {isFetchingNextPage && (
-                    <p>
-                        Chargement...
-                    </p>
-                )}
-            </div>
+            {(hasNextPage && members.length > 0) && (
+                <button
+                    onClick={() => fetchNextPage()}
+                    disabled={isFetchingNextPage}
+                    className="w-full p-3 mt-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50"
+                >
+                    {isFetchingNextPage ? 'Chargement...' : 'Voir plus'}
+                </button>
+            )}
 
         </div>
     );
