@@ -29,33 +29,34 @@ export default function VoicePickerComponent() {
     const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
 
     return <>
-        <Popover open={popoverOpen}>
-            <PopoverTrigger
-            >
-                <span 
-                onClick={() => setPopoverOpen(!popoverOpen)}
-                className="w-fit p-2.5 justify-center cursor-pointer h-full px-4 border-gray-500 border rounded flex items-center gap-1">
+        <Popover
+            open={popoverOpen}
+            onOpenChange={setPopoverOpen}
+        >
+            <PopoverTrigger>
+                <span className="w-fit p-2.5 justify-center cursor-pointer h-full px-4 border-gray-500 border rounded flex items-center gap-1">
                     {chosenVoice.voiceAppellation}
                     <CaretDownIcon size={18} />
                 </span>
             </PopoverTrigger>
-            <PopoverContent
-                align="start"
-                className={"p-0 rounded border-none"}
-            >
+
+            <PopoverContent align="start" className="p-0 rounded border-none">
                 <div className="md:text-base flex flex-col gap-1 p-2">
-                    {voices.map((voice) => {
-                        return <span
-                            className={`cursor-pointer rounded p-2.5 px-4 w-full ${(voice.voiceNumber === chosenVoice.voiceNumber) ? "bg-gray-100 text-black" : "text-gray-600 hover:bg-gray-50"}`}
+                    {voices.map((voice) => (
+                        <span
                             key={voice.voiceNumber}
+                            className={`cursor-pointer rounded p-2.5 px-4 w-full ${voice.voiceNumber === chosenVoice.voiceNumber
+                                    ? "bg-gray-100 text-black"
+                                    : "text-gray-600 hover:bg-gray-50"
+                                }`}
                             onClick={() => {
-                                if (voice.voiceNumber !== chosenVoice.voiceNumber) setChosenVoice(voice)
-                                setPopoverOpen(false)
+                                setChosenVoice(voice);
+                                setPopoverOpen(false);
                             }}
                         >
                             {voice.voiceAppellation}
                         </span>
-                    })}
+                    ))}
                 </div>
             </PopoverContent>
         </Popover>

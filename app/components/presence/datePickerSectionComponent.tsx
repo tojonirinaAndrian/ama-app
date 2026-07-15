@@ -35,10 +35,11 @@ export default function DatePickerSection() {
         </span>
       </p> */}
       <div className="not-xl:hidden">
-        <Popover open={popoverOpen}>
+        <Popover open={popoverOpen}
+            onOpenChange={setPopoverOpen}
+        >
           <PopoverTrigger
             // disabled={membresPresents.length > 0}
-            onClick={() => setPopoverOpen(!popoverOpen)}
           >
             <p
               className="p-2.5 px-4 border-gray-500 text-black border flex gap-2 items-center rounded-md cursor-pointer"

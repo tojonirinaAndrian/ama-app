@@ -16,7 +16,7 @@ import { useSidebarStore } from "@/app/stores/sidebar-store";
 
 import Link from "next/link";
 
-type ActivePage = "accueil" | "liste" | "presence" | "a-propos";
+// type ActivePage = "accueil" | "liste" | "presence" | "a-propos";
 
 const ACTIVE_STYLE = "bg-gray-100 !text-black";
 
