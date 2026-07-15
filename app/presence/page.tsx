@@ -6,7 +6,7 @@ import DatePickerSection from "../components/presence/datePickerSectionComponent
 import MembersListComponent from "../components/presence/membersListComponent";
 import SearchComponent from "../components/presence/searchComponent";
 import VoicePickerComponent from "../components/presence/voiceFilterComponent";
-import { CaretDoubleUpIcon, CaretDoubleDownIcon, WarningIcon, WarningCircleIcon } from "@phosphor-icons/react";
+import { CaretDoubleUpIcon, CaretDoubleDownIcon, WarningIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
 const ACTIVE_STYLE = "text-black! border-black!";

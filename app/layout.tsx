@@ -3,8 +3,9 @@ import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 import SidebarComponent from "./components/sidebarComponent";
 import { cn } from "@/lib/utils";
+import Providers from './providers';
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
@@ -26,10 +27,12 @@ export default function RootLayout({
       className={cn("antialiased", spaceGrotesk.variable, "font-sans", inter.variable)}
     >
       <body className="flex xl:flex-row flex-col h-dvh text-sm md:text-base">
-        <SidebarComponent />
-        <div className="flex flex-col p-5 py-4 h-full w-full overflow-auto">
-          {children}
-        </div>
+        <Providers>
+          <SidebarComponent />
+          <div className="flex flex-col p-5 py-4 h-full w-full overflow-auto">
+            {children}
+          </div>
+        </Providers>
       </body>
     </html>
   );
