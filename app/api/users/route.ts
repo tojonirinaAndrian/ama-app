@@ -6,8 +6,14 @@ export async function GET(request: NextRequest) {
 
   const limit = Number(searchParams.get("limit")) || 20;
   const skip = Number(searchParams.get("skip")) || 0;
+  const search = String(searchParams.get("search")?.toLowerCase().trim()) || "";
 
-  const paginatedUsers = users.users.slice(skip, skip + limit);
+  const searchResults = users.users.filter((user) => {
+    const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
+    return fullName.includes(search);
+  })
+
+  const paginatedUsers = searchResults.slice(skip, skip + limit);
 
   return Response.json({
     users: paginatedUsers,

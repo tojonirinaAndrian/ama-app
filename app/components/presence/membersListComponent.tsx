@@ -4,6 +4,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react'; // NEW
 import { useInView } from 'react-intersection-observer'; // NEW
 import Image from 'next/image';
+import { usePresenceStore } from '@/app/stores/presence-store';
 
 type MemberType = {
     id: number;
@@ -38,12 +39,14 @@ type MembersResponse = {
 
 async function getMembers({
     pageParam,
+    search
 }: {
-    pageParam: number;
+    pageParam: number,
+    search: string
 }): Promise<MembersResponse> {
 
     const response = await fetch(
-        `/api/users?limit=20&skip=${pageParam}`
+        `/api/users?limit=20&skip=${pageParam}&search=${search}`
     );
 
     if (!response.ok) {
@@ -66,7 +69,6 @@ async function getMembers({
         limit: data.limit,
     };
 }
-
 
 function MemberComponent({ member }: { member: MemberType }) {
     return (
@@ -98,6 +100,7 @@ function MemberComponent({ member }: { member: MemberType }) {
 
 
 export default function MembersListComponent() {
+    const { searchInput } = usePresenceStore();
 
     // NEW: create a watcher element
     const {
@@ -107,7 +110,6 @@ export default function MembersListComponent() {
         threshold: 0,
     });
 
-
     const {
         data,
         fetchNextPage,
@@ -116,11 +118,13 @@ export default function MembersListComponent() {
         isLoading,
         error,
     } = useInfiniteQuery({
-        queryKey: ['members'],
+        queryKey: ['members', searchInput],
 
         initialPageParam: 0,
 
-        queryFn: getMembers,
+        queryFn: ({pageParam}) => {
+            return getMembers({pageParam, search: searchInput})
+        },
 
         getNextPageParam: (lastPage) => {
             const nextSkip =
@@ -134,7 +138,6 @@ export default function MembersListComponent() {
         staleTime: 1000 * 60 * 5,
     });
 
-
     // NEW: trigger loading when bottom is visible
     useEffect(() => {
         if (inView && hasNextPage && !isFetchingNextPage) {
@@ -147,26 +150,24 @@ export default function MembersListComponent() {
         fetchNextPage,
     ]);
 
-
     const members =
         data?.pages.flatMap(
             page => page.members
         ) ?? [];
 
-
     if (isLoading) {
         return <p>Chargement...</p>;
     }
-
 
     if (error) {
         return <p>Erreur de chargement</p>;
     }
 
-
     return (
         <div className="h-full border rounded overflow-auto flex flex-col gap-2 p-2.5 md:p-3">
-
+            
+            {/* {searchInput} */}
+            
             {members.map((member) => (
                 <MemberComponent
                     key={member.id}

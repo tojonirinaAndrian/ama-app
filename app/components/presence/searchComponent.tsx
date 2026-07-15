@@ -1,11 +1,13 @@
 'use client';
+import { usePresenceStore } from "@/app/stores/presence-store";
 import { MagnifyingGlassIcon, BackspaceIcon } from "@phosphor-icons/react";
 import { useEffect, useState, useRef } from "react";
 
 export default function SearchComponent() {
     const [isInputting, setIsInputting] = useState<boolean>(false);
-    const [userInput, setUserInput] = useState<string>("");
+    // const [searchInput, setSearchInput] = useState<string>("");
     const searchInputRef = useRef<HTMLInputElement>(null);
+    const { searchInput, setSearchInput } = usePresenceStore();
 
     useEffect(() => {
         const searchElement = document.getElementById("searchInput");
@@ -31,12 +33,16 @@ export default function SearchComponent() {
             window.removeEventListener("keydown", handleKeyDown);
         };
     }, []);
+    
+    
     const onCancelClick = () => {
         const searchElement: HTMLInputElement = document.getElementById("searchInput") as HTMLInputElement;
         searchElement.value = "";
         searchElement.focus();
-        setUserInput("");
+        setSearchInput("");
     };
+
+
     return <>
         <div
             className={`w-full xl:w-[45%] md:w-[60%] relative border flex gap-1 p-1 items-center rounded border-gray-200 bg-gray-50 ${isInputting && "outline outline-gray-500 bg-white"}`}>
@@ -53,10 +59,10 @@ export default function SearchComponent() {
                 ref={searchInputRef}
                 placeholder="Rechercher un membre..."
                 onChange={(e) => {
-                    setUserInput(e.target.value)
+                    setSearchInput(e.target.value)
                 }}
             />
-            {(userInput.length >= 1) ? <button
+            {(searchInput.length >= 1) ? <button
                 onClick={onCancelClick}
                 className="cursor-pointer w-fit flex gap-2 px-3 items-center bg-white border rounded p-2 border-gray-300">
                 <BackspaceIcon size={18} />

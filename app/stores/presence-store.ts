@@ -8,19 +8,28 @@ export type ActiveSection =
 interface PresenceStore {
     activeSection: ActiveSection;
     setActiveSection: (page: ActiveSection) => void;
-
+    searchInput: string;
+    setSearchInput: (text: string) => void;
 }
 
 export const usePresenceStore = create<PresenceStore>()(
     persist(
         (set) => ({
             activeSection: "faire",
-
-            setActiveSection: (section) =>
+            setActiveSection: (section) => {
                 set({
                     activeSection: section,
-                }),
+                })
+            },
+
+            searchInput: "",
+            setSearchInput: (text) => {
+                set({
+                    searchInput: text
+                })
+            }
         }),
+        
         {
             name: "presence-store",
         }
