@@ -55,6 +55,8 @@ function MemberComponent({ member }: MemberComponentProps) {
       <Image
         src={member.image}
         alt={member.name}
+        width={100}
+        height={100}
         className="w-14 h-14 rounded-full object-cover"
       />
 
