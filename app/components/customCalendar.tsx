@@ -72,13 +72,12 @@ export default function CustomCalendar({ closeComponent, currentlyChosenDate, se
     // Determine if next navigation element should be disabled
     const isNextDisabled = currentMonth === today.getMonth() && currentYear === today.getFullYear();
     const onTodayClick = () => {
-
         setViewDate(new Date(today.getFullYear(), today.getMonth()));
         setCurrentlyChosenDate(today);
     }
 
     return (
-        <div className="flex flex-col gap-2 xl:p-3">
+        <div className="flex flex-col gap-2 xl:p-2">
             <div className="w-full flex gap-1 flex-col border border-gray-300 rounded-md p-3 bg-white">
                 {/* Header Control Panel */}
                 <div className="flex justify-between items-center px-1">

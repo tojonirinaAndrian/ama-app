@@ -31,9 +31,10 @@ export default function VoicePickerComponent() {
     return <>
         <Popover open={popoverOpen}>
             <PopoverTrigger
-                onClick={() => setPopoverOpen(!popoverOpen)}
             >
-                <span className="w-fit p-2.5 justify-center cursor-pointer h-full px-4 border-gray-200 border rounded flex items-center gap-1">
+                <span 
+                onClick={() => setPopoverOpen(!popoverOpen)}
+                className="w-fit p-2.5 justify-center cursor-pointer h-full px-4 border-gray-500 border rounded flex items-center gap-1">
                     {chosenVoice.voiceAppellation}
                     <CaretDownIcon size={18} />
                 </span>

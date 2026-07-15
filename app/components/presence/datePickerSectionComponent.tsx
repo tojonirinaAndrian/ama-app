@@ -27,13 +27,13 @@ export default function DatePickerSection() {
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   return (
-    <div className="flex gap-4 w-full items-center">
-      <p className="text-gray-500">
+    <div className="flex items-center">
+      {/* <p className="text-gray-500">
         {"Le "}
         <span className="xl:font-semibold font-bold">
           {actualDateFaire.toLocaleDateString("en-GB")}
         </span>
-      </p>
+      </p> */}
       <div className="not-xl:hidden">
         <Popover open={popoverOpen}>
           <PopoverTrigger
@@ -41,10 +41,10 @@ export default function DatePickerSection() {
             onClick={() => setPopoverOpen(!popoverOpen)}
           >
             <p
-              className="p-2 border-gray-600 text-black border flex gap-2 items-center rounded-md cursor-pointer"
+              className="p-2.5 px-4 border-gray-500 text-black border flex gap-2 items-center rounded-md cursor-pointer"
             >
               <CalendarIcon size={18} />
-              Modifier la date
+              <span>{actualDateFaire.toLocaleDateString("en-GB")}</span>
             </p>
           </PopoverTrigger>
           <PopoverContent align="end" className="p-0 border-0">
@@ -62,12 +62,12 @@ export default function DatePickerSection() {
           <DialogTrigger
           // disabled={membresPresents.length > 0}
           >
-            <span
-              className="p-2 border-gray-600 border text-black flex gap-2 items-center rounded-md cursor-pointer"
+            <p
+              className="p-2.5 px-4 border-gray-500 text-black border flex gap-2 items-center rounded-md cursor-pointer"
             >
               <CalendarIcon size={18} />
-              Modifier la date
-            </span>
+              <span>{actualDateFaire.toLocaleDateString("en-GB")}</span>
+            </p>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader className="text-left">

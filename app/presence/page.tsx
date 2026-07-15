@@ -3,9 +3,10 @@
 import { usePresenceStore } from "../stores/presence-store";
 // import { Button } from "@/components/ui/button";
 import DatePickerSection from "../components/presence/datePickerSectionComponent";
+import MembersListComponent from "../components/presence/membersListComponent";
 import SearchComponent from "../components/presence/searchComponent";
 import VoicePickerComponent from "../components/presence/voiceFilterComponent";
-import { CaretDoubleUpIcon, CaretDoubleDownIcon } from "@phosphor-icons/react";
+import { CaretDoubleUpIcon, CaretDoubleDownIcon, WarningIcon, WarningCircleIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
 const ACTIVE_STYLE = "text-black! border-black!";
@@ -25,21 +26,35 @@ export default function Presence() {
             Confirmez ou vérifiez la présence des membres de la Chorale ici.
           </p>
         </div>
-        <div className="w-full h-px bg-gray-100 not-xl:hidden"></div>
-        <div className="flex gap-2 items-center text-gray-700">
-          <DatePickerSection />
+        <div className="w-fit flex gap-3 items-center text-red-400 border-2 border-red-300 bg-red-50 p-3 rounded-md">
+          <WarningIcon size={32} className="" weight="bold"/>
+          <div className="flex flex-col">
+            <p className="font-bold">
+              IMPORTANT !!!
+            </p>
+            <p>
+              Si vous choisissez de faire la presence, la date ne sera plus modifiable apres votre premier enregistrement.
+            </p>
+          </div>
         </div>
       </div>
-      <div className="relative h-full">
-        <button className="bg-gray-100 border border-gray-200 rounded p-1.5 absolute -right-1 -top-3.5 z-2"
-        onClick={() => {
-          setMainRise(!mainRise)
-        }}
+      <div className="relative">
+        <button className="bg-gray-100 border border-gray-200 rounded p-1.5 absolute right-2 -top-1 xl:top-0 z-2 cursor-pointer hover:bg-gray-200 flex gap-1 text-gray-800"
+          onClick={() => {
+            setMainRise(!mainRise)
+          }}
         >
           {mainRise ? <CaretDoubleDownIcon />
             : <CaretDoubleUpIcon />}
+          <span className="not-md:hidden text-xs">
+            {mainRise ? "Retrecir"
+              : "Agrandir"}
+          </span>
         </button>
-        <div className="h-full overflow-y-auto flex flex-col border rounded-md border-gray-100 relative">
+      </div>
+      <div className="relative h-full flex flex-col overflow-auto">
+
+        <div className="h-full flex flex-col border rounded-md border-gray-100 relative overflow-auto">
           <div className="*:hover:cursor-pointer w-full flex *:w-full *:p-5 *:border-b-2 *:border-transparent font-semibold text-gray-400">
             <button
               onClick={() => setActiveSection("faire")}
@@ -54,11 +69,13 @@ export default function Presence() {
               Voir les présents
             </button>
           </div>
-          <div className="p-2 flex flex-col w-full">
-            <div className="flex not-md:flex-col gap-1 w-full">
+          <div className="p-3 flex flex-col w-full h-full gap-3 overflow-auto">
+            <div className="flex gap-2 w-full">
+              <DatePickerSection />
               <VoicePickerComponent />
-              <SearchComponent />
             </div>
+            <SearchComponent />
+            <MembersListComponent />
           </div>
           {/* TODO: Add mock users */}
         </div>
