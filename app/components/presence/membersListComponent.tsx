@@ -6,11 +6,11 @@ import Image from 'next/image';
 import { usePresenceStore } from '@/app/stores/presence-store';
 import { useRef, useEffect, useState } from 'react'; // 1. Import useRef and useEffect
 import { ArrowCounterClockwiseIcon } from "@phosphor-icons/react"
+import { Skeleton } from '@/components/ui/skeleton';
 
 type MemberType = {
     id: number;
     name: string;
-    username: string;
     voiceNumber: number;
     voiceAppellation: string;
     image: string;
@@ -62,7 +62,6 @@ async function getMembers({
         members: data.users.map((user: DummyUser, index: number) => ({
             id: user.id,
             name: `${user.firstName} ${user.lastName}`,
-            username: user.username,
             image: user.image,
             ...voiceTypes[index % voiceTypes.length],
         })),
@@ -83,7 +82,7 @@ function MemberComponent({ member }: { member: MemberType }) {
 
     return (
         <div className="relative">
-            {(present && activeSection==="faire") && <div
+            {(present && activeSection === "faire") && <div
                 onClick={() => { setPresent(false) }}
                 className="z-1 text-sm cursor-pointer flex gap-1 right-4 bottom-4 items-center hover:bg-yellow-300/65 absolute p-3 bg-yellow-200 rounded-md text-yellow-700 border border-yellow-500">
                 <ArrowCounterClockwiseIcon />
@@ -101,7 +100,6 @@ function MemberComponent({ member }: { member: MemberType }) {
                 />
                 <div className="flex flex-col">
                     <p className="font-semibold">{member.name}</p>
-                    <p className="text-gray-500 text-sm">@{member.username}</p>
                     <p className="text-gray-500 capitalize text-sm">
                         {member.voiceNumber}, {member.voiceAppellation}
                     </p>
@@ -151,7 +149,11 @@ export default function MembersListComponent() {
     const members = data?.pages.flatMap((page) => page.members) ?? [];
 
     if (isLoading) {
-        return <p>Chargement...</p>;
+        return <>
+            {<MemberComponentSkeleton />}
+            {<MemberComponentSkeleton />}
+            {<MemberComponentSkeleton />}
+        </>;
     }
 
     if (error) {
@@ -174,12 +176,31 @@ export default function MembersListComponent() {
             {hasNextPage && members.length > 0 && (
                 <button
                     onClick={() => fetchNextPage()}
-                    disabled={isFetchingNextPage}
-                    className="cursor-pointer w-full p-3 border border-gray-500 rounded-md hover:bg-gray-100 disabled:opacity-50"
+                    className={` ${isFetchingNextPage && "hidden"} cursor-pointer w-full p-3 border border-gray-500 rounded-md hover:bg-gray-100 disabled:opacity-50`}
                 >
-                    {isFetchingNextPage ? 'Chargement...' : 'Voir plus'}
+                    {'Voir plus'}
                 </button>
             )}
+            {isFetchingNextPage && <>
+                {<MemberComponentSkeleton />}
+                {<MemberComponentSkeleton />}
+                {<MemberComponentSkeleton />}
+            </>}
         </div>
     );
+}
+
+function MemberComponentSkeleton() {
+    return <>
+        <div className={`cursor-pointer w-full border-2 rounded p-3 flex gap-2 items-center`}
+        >
+            <Skeleton
+                className="w-14 h-14 rounded-full"
+            />
+            <div className="flex flex-col w-full gap-2">
+                <Skeleton className="w-[50%] h-4" />
+                <Skeleton className="w-[20%] h-4" />
+            </div>
+        </div>
+    </>
 }
