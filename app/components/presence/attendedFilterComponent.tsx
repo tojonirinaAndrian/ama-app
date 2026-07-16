@@ -7,7 +7,7 @@ export default function AttendedFilterComponent () {
     const { activeSeeSectionFilter, setActiveSeeSectionFilter } = usePresenceStore()
     
     return <>
-    <div className="w-full xl:w-[45%] md:w-[60%]  p-1 bg-gray-200/50 gap-1 *:cursor-pointer text-gray-600 font-semibold rounded *:w-full flex *:p-2 *:rounded-md">
+    <div className="w-full xl:w-[45%] md:w-[60%]  p-1 bg-gray-200/50 gap-1 *:cursor-pointer text-gray-400 font-semibold rounded *:w-full flex *:p-2 *:rounded-md">
         <button 
         onClick={() => {
             if (activeSeeSectionFilter !== "tous") setActiveSeeSectionFilter("tous")

@@ -5,7 +5,7 @@ import { useDebounce } from 'use-debounce';
 import Image from 'next/image';
 import { usePresenceStore } from '@/app/stores/presence-store';
 import { useRef, useEffect, useState } from 'react'; // 1. Import useRef and useEffect
-import { ArrowCounterClockwiseIcon } from "@phosphor-icons/react"
+import { ArrowCounterClockwiseIcon, EyeIcon } from "@phosphor-icons/react"
 import { Skeleton } from '@/components/ui/skeleton';
 
 type MemberType = {
@@ -80,15 +80,27 @@ function MemberComponent({ member }: { member: MemberType }) {
         if (!present) setPresent(true);
     };
 
+    const onOverviewClick = () => {
+        return
+    }
+
     return (
         <div className="relative">
             {(present && activeSection === "faire") && <div
                 onClick={() => { setPresent(false) }}
-                className="z-1 text-sm cursor-pointer flex gap-1 right-4 bottom-4 items-center hover:bg-yellow-300/65 absolute p-3 bg-yellow-200 rounded-md text-yellow-700 border border-yellow-500">
+                className="z-1 text-sm cursor-pointer flex gap-1 right-2 top-2 items-center hover:bg-yellow-300/65 absolute p-2 bg-yellow-200 rounded-md text-yellow-700 border border-yellow-500">
                 <ArrowCounterClockwiseIcon />
-                <span className="not-md:hidden">Undo</span>
+                <span className="not-md:hidden">Annuler</span>
             </div>}
-            <div className={`cursor-pointer w-full border-2 rounded p-3 flex gap-2 items-center ${present ? "border-green-500 bg-green-50" : "hover:bg-gray-50 bg-white"}`}
+
+            {(activeSection === "voir") && <button 
+            onClick={onOverviewClick}
+            className="text-sm hover:bg-blue-200 absolute right-2 top-2 cursor-pointer text-blue-800 flex items-center gap-2 p-2 rounded border-blue-300 border bg-blue-100">
+                <EyeIcon />
+                <span className="not-md:hidden">Apercu</span>
+            </button>}
+
+            <div className={`${activeSection === "voir" ? "cursor-default" : `${!present && "cursor-pointer hover:bg-gray-50"}`} w-full border-2 rounded p-3 flex gap-2 items-center ${present ? "border-green-500 cursor-default bg-green-50" : "bg-white"}`}
                 onClick={onComponentClick}
             >
                 <Image
@@ -149,11 +161,18 @@ export default function MembersListComponent() {
     const members = data?.pages.flatMap((page) => page.members) ?? [];
 
     if (isLoading) {
-        return <>
+        return <div
+            className="h-full bg-gray-50/20 border rounded overflow-hidden flex flex-col gap-2 p-2.5 md:p-3"
+        >
             {<MemberComponentSkeleton />}
             {<MemberComponentSkeleton />}
             {<MemberComponentSkeleton />}
-        </>;
+            {<MemberComponentSkeleton />}
+            {<MemberComponentSkeleton />}
+            {<MemberComponentSkeleton />}
+            {<MemberComponentSkeleton />}
+            {<MemberComponentSkeleton />}
+        </div>;
     }
 
     if (error) {
