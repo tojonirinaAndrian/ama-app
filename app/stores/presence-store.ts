@@ -5,13 +5,17 @@ export type ActiveSection =
     | "faire"
     | "voir"
 
+export type ActiveSeeSectionFilter = "tous" | "presents" | "absents";
+
 interface PresenceStore {
     activeSection: ActiveSection;
     setActiveSection: (page: ActiveSection) => void;
     searchInput: string;
     setSearchInput: (text: string) => void;
     voiceNumber: number;
-    setVoiceNumber: (voiceNumber: number) => void
+    setVoiceNumber: (voiceNumber: number) => void;
+    activeSeeSectionFilter: ActiveSeeSectionFilter;
+    setActiveSeeSectionFilter: (seeSectionFilter: ActiveSeeSectionFilter) => void
 }
 
 export const usePresenceStore = create<PresenceStore>()(
@@ -35,6 +39,13 @@ export const usePresenceStore = create<PresenceStore>()(
             setVoiceNumber: (num) => {
                 set({
                     voiceNumber: num
+                })
+            },
+
+            activeSeeSectionFilter: "tous",
+            setActiveSeeSectionFilter: (value) => {
+                set ({
+                    activeSeeSectionFilter: value
                 })
             }
         }),

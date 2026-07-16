@@ -34,15 +34,13 @@ export default function SearchComponent() {
             window.removeEventListener("keydown", handleKeyDown);
         };
     }, []);
-    
-    
+        
     const onCancelClick = () => {
         const searchElement: HTMLInputElement = document.getElementById("searchInput") as HTMLInputElement;
         searchElement.value = "";
         searchElement.focus();
         setSearchInput("");
     };
-
 
     return <>
         <div

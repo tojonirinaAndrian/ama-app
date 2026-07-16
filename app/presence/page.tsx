@@ -8,6 +8,7 @@ import SearchComponent from "../components/presence/searchComponent";
 import VoicePickerComponent from "../components/presence/voiceFilterComponent";
 import { CaretDoubleUpIcon, CaretDoubleDownIcon, WarningIcon } from "@phosphor-icons/react";
 import { useState } from "react";
+import AttendedFilterComponent from "../components/presence/attendedFilterComponent";
 
 const ACTIVE_STYLE = "text-black! border-black!";
 
@@ -27,7 +28,7 @@ export default function Presence() {
           </p>
         </div>
         <div className="w-fit flex gap-3 items-center text-red-400 border-2 border-red-300 bg-red-50 p-3 rounded-md">
-          <WarningIcon size={32} className="" weight="bold"/>
+          <WarningIcon size={32} className="" weight="bold" />
           <div className="flex flex-col">
             <p className="font-bold">
               IMPORTANT !!!
@@ -74,6 +75,7 @@ export default function Presence() {
               <DatePickerSection />
               <VoicePickerComponent />
             </div>
+            {(activeSection === "voir") && <AttendedFilterComponent />}
             <SearchComponent />
             <MembersListComponent />
           </div>
