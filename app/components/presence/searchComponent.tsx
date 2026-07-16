@@ -10,7 +10,8 @@ export default function SearchComponent() {
     const { searchInput, setSearchInput } = usePresenceStore();
 
     useEffect(() => {
-        const searchElement = document.getElementById("searchInput");
+        const searchElement: HTMLInputElement = document.getElementById("searchInput") as HTMLInputElement;
+        
         searchElement?.addEventListener("focusin", () => {
             setIsInputting(true)
         });

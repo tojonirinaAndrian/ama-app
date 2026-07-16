@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CaretDownIcon } from "@phosphor-icons/react"
+import { usePresence } from "motion/react";
+import { usePresenceStore } from "@/app/stores/presence-store";
 type VoiceType = {
     voiceNumber: number,
     voiceAppellation: string
@@ -22,11 +24,15 @@ const voices: VoiceType[] = [{
 }, {
     voiceNumber: 4,
     voiceAppellation: "Bass"
+}, {
+    voiceNumber: 5,
+    voiceAppellation: "Musicien"
 }]
 
 export default function VoicePickerComponent() {
     const [chosenVoice, setChosenVoice] = useState<VoiceType>(voices[0]);
     const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
+    const { setVoiceNumber } = usePresenceStore();
 
     return <>
         <Popover
@@ -51,6 +57,7 @@ export default function VoicePickerComponent() {
                                 }`}
                             onClick={() => {
                                 setChosenVoice(voice);
+                                setVoiceNumber(voice.voiceNumber)
                                 setPopoverOpen(false);
                             }}
                         >

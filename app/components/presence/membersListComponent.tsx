@@ -28,6 +28,7 @@ const voiceTypes = [
     { voiceNumber: 2, voiceAppellation: 'alto' },
     { voiceNumber: 3, voiceAppellation: 'tenor' },
     { voiceNumber: 4, voiceAppellation: 'bass' },
+    { voiceNumber: 5, voiceAppellation: 'musicien' },
 ];
 
 type MembersResponse = {
@@ -39,13 +40,15 @@ type MembersResponse = {
 
 async function getMembers({
     pageParam,
-    search
+    search,
+    voiceNumber
 }: {
     pageParam: number,
-    search: string
+    search: string,
+    voiceNumber: number
 }): Promise<MembersResponse> {
     const response = await fetch(
-        `/api/users?limit=20&skip=${pageParam}&search=${encodeURIComponent(search)}`
+        `/api/users?limit=20&skip=${pageParam}&search=${encodeURIComponent(search)}&voiceNumber=${voiceNumber}`
     );
 
     if (!response.ok) {
@@ -90,7 +93,7 @@ function MemberComponent({ member }: { member: MemberType }) {
 }
 
 export default function MembersListComponent() {
-    const { searchInput } = usePresenceStore();
+    const { searchInput, voiceNumber } = usePresenceStore();
     const [debouncedSearch] = useDebounce(searchInput, 500);
 
     // 2. Create a reference to the scrollable container
@@ -104,10 +107,10 @@ export default function MembersListComponent() {
         isLoading,
         error,
     } = useInfiniteQuery({
-        queryKey: ['members', debouncedSearch],
+        queryKey: ['members', debouncedSearch, voiceNumber],
         initialPageParam: 0,
         queryFn: ({ pageParam }) => {
-            return getMembers({ pageParam, search: debouncedSearch });
+            return getMembers({ pageParam, search: debouncedSearch, voiceNumber });
         },
         getNextPageParam: (lastPage) => {
             if (!lastPage.members || lastPage.members.length < lastPage.limit) {
@@ -122,10 +125,7 @@ export default function MembersListComponent() {
     // 3. Reset scroll to top whenever the search query changes
     useEffect(() => {
         if (containerRef.current) {
-            containerRef.current.scrollTop = 0; 
-            
-            // Optional: If you prefer a smooth scroll effect, use this instead:
-            // containerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+            containerRef.current.scrollTo({top:0, behavior: "smooth"});
         }
     }, [debouncedSearch]);
 
@@ -145,15 +145,18 @@ export default function MembersListComponent() {
             ref={containerRef} 
             className="h-full border rounded overflow-auto flex flex-col gap-2 p-2.5 md:p-3"
         >
+            {members.length >= 1 ? <>
             {members.map((member) => (
                 <MemberComponent key={member.id} member={member} />
             ))}
-
+            </> : <>
+            <p className="p-2 text-gray-500">{"Il n'y a personne ici."}</p>
+            </>}
             {hasNextPage && members.length > 0 && (
                 <button
                     onClick={() => fetchNextPage()}
                     disabled={isFetchingNextPage}
-                    className="w-full p-3 mt-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:opacity-50 transition-colors"
+                    className="cursor-pointer w-full p-3 border border-gray-500 rounded-md hover:bg-gray-100 disabled:opacity-50"
                 >
                     {isFetchingNextPage ? 'Chargement...' : 'Voir plus'}
                 </button>

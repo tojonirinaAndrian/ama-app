@@ -10,6 +10,8 @@ interface PresenceStore {
     setActiveSection: (page: ActiveSection) => void;
     searchInput: string;
     setSearchInput: (text: string) => void;
+    voiceNumber: number;
+    setVoiceNumber: (voiceNumber: number) => void
 }
 
 export const usePresenceStore = create<PresenceStore>()(
@@ -27,9 +29,15 @@ export const usePresenceStore = create<PresenceStore>()(
                 set({
                     searchInput: text
                 })
+            },
+
+            voiceNumber: 0,
+            setVoiceNumber: (num) => {
+                set({
+                    voiceNumber: num
+                })
             }
         }),
-        
         {
             name: "presence-store",
         }
