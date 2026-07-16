@@ -62,6 +62,7 @@ export default function SearchComponent() {
                 onChange={(e) => {
                     setSearchInput(e.target.value)
                 }}
+                defaultValue={searchInput}
             />
             {(searchInput.length >= 1) ? <button
                 onClick={onCancelClick}
