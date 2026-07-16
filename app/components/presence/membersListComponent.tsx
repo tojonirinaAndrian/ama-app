@@ -4,7 +4,8 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useDebounce } from 'use-debounce';
 import Image from 'next/image';
 import { usePresenceStore } from '@/app/stores/presence-store';
-import { useRef, useEffect } from 'react'; // 1. Import useRef and useEffect
+import { useRef, useEffect, useState } from 'react'; // 1. Import useRef and useEffect
+import { ArrowCounterClockwiseIcon } from "@phosphor-icons/react"
 
 type MemberType = {
     id: number;
@@ -72,21 +73,39 @@ async function getMembers({
 }
 
 function MemberComponent({ member }: { member: MemberType }) {
+    const [present, setPresent] = useState<boolean>(false);
+    const { activeSection } = usePresenceStore();
+
+    const onComponentClick = () => {
+        if (activeSection === "voir") return
+        if (!present) setPresent(true);
+    };
+
     return (
-        <div className="w-full border rounded p-3 flex gap-2 items-center">
-            <Image
-                src={member.image}
-                alt={member.name}
-                width={100}
-                height={100}
-                className="w-14 h-14 rounded-full object-cover"
-            />
-            <div className="flex flex-col">
-                <p className="font-semibold">{member.name}</p>
-                <p className="text-gray-500 text-sm">@{member.username}</p>
-                <p className="text-gray-500 capitalize text-sm">
-                    {member.voiceNumber}, {member.voiceAppellation}
-                </p>
+        <div className="relative">
+            {(present && activeSection==="faire") && <div
+                onClick={() => { setPresent(false) }}
+                className="z-1 text-sm cursor-pointer flex gap-1 right-4 bottom-4 items-center hover:bg-yellow-300/65 absolute p-3 bg-yellow-200 rounded-md text-yellow-700 border border-yellow-500">
+                <ArrowCounterClockwiseIcon />
+                <span className="not-md:hidden">Undo</span>
+            </div>}
+            <div className={`cursor-pointer w-full border-2 rounded p-3 flex gap-2 items-center ${present ? "border-green-500 bg-green-50" : "hover:bg-gray-50 bg-white"}`}
+                onClick={onComponentClick}
+            >
+                <Image
+                    src={member.image}
+                    alt={member.name}
+                    width={100}
+                    height={100}
+                    className="w-14 h-14 rounded-full object-cover"
+                />
+                <div className="flex flex-col">
+                    <p className="font-semibold">{member.name}</p>
+                    <p className="text-gray-500 text-sm">@{member.username}</p>
+                    <p className="text-gray-500 capitalize text-sm">
+                        {member.voiceNumber}, {member.voiceAppellation}
+                    </p>
+                </div>
             </div>
         </div>
     );
@@ -125,7 +144,7 @@ export default function MembersListComponent() {
     // 3. Reset scroll to top whenever the search query changes
     useEffect(() => {
         if (containerRef.current) {
-            containerRef.current.scrollTo({top:0, behavior: "smooth"});
+            containerRef.current.scrollTo({ top: 0, behavior: "smooth" });
         }
     }, [debouncedSearch]);
 
@@ -141,16 +160,16 @@ export default function MembersListComponent() {
 
     return (
         /* 4. Attach the ref to this overflow-auto element */
-        <div 
-            ref={containerRef} 
-            className="h-full border rounded overflow-auto flex flex-col gap-2 p-2.5 md:p-3"
+        <div
+            ref={containerRef}
+            className="h-full bg-gray-50/20 border rounded overflow-auto flex flex-col gap-2 p-2.5 md:p-3"
         >
             {members.length >= 1 ? <>
-            {members.map((member) => (
-                <MemberComponent key={member.id} member={member} />
-            ))}
+                {members.map((member) => (
+                    <MemberComponent key={member.id} member={member} />
+                ))}
             </> : <>
-            <p className="p-2 text-gray-500">{"Il n'y a personne ici."}</p>
+                <p className="p-2 text-gray-500">{"Il n'y a personne ici."}</p>
             </>}
             {hasNextPage && members.length > 0 && (
                 <button

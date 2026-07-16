@@ -1,3 +1,8 @@
+// next.config.js
+module.exports = {
+  allowedDevOrigins: ['192.168.43.241'],
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
