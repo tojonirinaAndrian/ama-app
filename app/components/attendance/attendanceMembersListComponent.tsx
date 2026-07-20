@@ -48,6 +48,7 @@ async function getMembers({
     search: string,
     voiceNumber: number
 }): Promise<MembersResponse> {
+
     const response = await fetch(
         `/api/users?limit=20&skip=${pageParam}&search=${encodeURIComponent(search)}&voiceNumber=${voiceNumber}`
     );

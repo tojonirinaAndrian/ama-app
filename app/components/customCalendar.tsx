@@ -38,7 +38,7 @@ const DAYS_OF_WEEK = ['Lun', "Mar", "mer", "jeu", "ven", "Sam", "Dim"];
 interface CustomCalendarProps {
     closeComponent?: () => void;
     currentlyChosenDate: Date;
-    setCurrentlyChosenDate: (date: Date) => void;
+    setCurrentlyChosenDate: (newDate: Date) => void;
 }
 
 export default function CustomCalendar({ closeComponent, currentlyChosenDate, setCurrentlyChosenDate }: CustomCalendarProps) {
@@ -148,12 +148,12 @@ export default function CustomCalendar({ closeComponent, currentlyChosenDate, se
             </div>
             <div className="flex gap-1 w-full *:w-full">
                 <button onClick={onTodayClick}
-                    className="p-3 cursor-pointer font-semibold border border-gray-500 rounded"
+                    className="p-3 cursor-pointer font-semibold border border-gray-500 rounded hover:bg-gray-50/80"
                 >
                     {"Today"}
                 </button>
                 <button
-                    className="p-3 cursor-pointer font-semibold border border-gray-500 rounded"
+                    className="p-3 cursor-pointer font-semibold border border-gray-500 rounded hover:bg-gray-50/80"
                     onClick={closeComponent}>
                     Confirm
                 </button>

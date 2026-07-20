@@ -13,46 +13,39 @@ import {
 } from "@/components/ui/dialog";
 import { CalendarIcon } from "@phosphor-icons/react";
 import { useState } from "react";
-
-// type MemberType = {
-//   id: number;
-//   imagePath: string;
-//   lastName: string;
-//   firstName: string;
-//   percentage: number;
-// };
-
+import { useAttendanceStore } from "@/app/stores/attendance-store";
 export default function DatePickerSection() {
-  const [actualDateFaire, setActualDateFaire] = useState<Date>(new Date());
+  const { actualDateMark, setActualDateMark, actualDateView, setActualDateView } = useAttendanceStore();
+
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+
+  const { activeSection } = useAttendanceStore()
+
   return (
     <div className="flex items-center">
-      {/* <p className="text-gray-500">
-        {"Le "}
-        <span className="xl:font-semibold font-bold">
-          {actualDateFaire.toLocaleDateString("en-GB")}
-        </span>
-      </p> */}
       <div className="not-xl:hidden">
         <Popover open={popoverOpen}
-            onOpenChange={setPopoverOpen}
+          onOpenChange={setPopoverOpen}
         >
           <PopoverTrigger
-            // disabled={membresPresents.length > 0}
           >
             <p
               className="p-2.5 px-4 border-gray-500 text-black border flex gap-2 items-center rounded-md cursor-pointer"
             >
               <CalendarIcon size={18} />
-              <span>{actualDateFaire.toLocaleDateString("en-GB")}</span>
+              {activeSection === "mark" ?
+                <span>{new Date(actualDateMark).toLocaleDateString("en-GB")}</span>
+                :
+                <span>{new Date(actualDateView).toLocaleDateString("en-GB")}</span>
+              }
             </p>
           </PopoverTrigger>
           <PopoverContent align="end" className="p-0 border-0">
             <CustomCalendar
               closeComponent={() => setPopoverOpen(false)}
-              currentlyChosenDate={actualDateFaire}
-              setCurrentlyChosenDate={setActualDateFaire}
+              currentlyChosenDate={activeSection === "mark" ? new Date(actualDateMark) : new Date(actualDateView)}
+              setCurrentlyChosenDate={activeSection === "mark" ? setActualDateMark : setActualDateView}
             />
 
           </PopoverContent>
@@ -67,7 +60,7 @@ export default function DatePickerSection() {
               className="p-2.5 px-4 border-gray-500 text-black border flex gap-2 items-center rounded-md cursor-pointer"
             >
               <CalendarIcon size={18} />
-              <span>{actualDateFaire.toLocaleDateString("en-GB")}</span>
+                <span>{new Date(actualDateMark).toLocaleDateString("en-GB")}</span>
             </p>
           </DialogTrigger>
           <DialogContent>
@@ -78,14 +71,14 @@ export default function DatePickerSection() {
               <DialogDescription>
                 {"Le "}
                 <span className="xl:font-semibold font-bold">
-                  {actualDateFaire.toLocaleDateString("en-GB")}
+                  {activeSection === "mark" ? new Date(actualDateMark).toLocaleDateString("en-GB") : new Date(actualDateView).toLocaleDateString("en-GB")}
                 </span>
               </DialogDescription>
             </DialogHeader>
             <CustomCalendar
               closeComponent={() => setDialogOpen(false)}
-              currentlyChosenDate={actualDateFaire}
-              setCurrentlyChosenDate={setActualDateFaire}
+              currentlyChosenDate={activeSection === "mark" ? new Date(actualDateMark) : new Date(actualDateView)}
+              setCurrentlyChosenDate={activeSection === "mark" ? setActualDateMark : setActualDateView}
             />
           </DialogContent>
         </Dialog>

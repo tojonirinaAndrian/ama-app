@@ -178,7 +178,7 @@ export default function SidebarComponent() {
       {menuOpen && (
         <div
           onClick={closeMenu}
-          className="absolute inset-0 z-1 h-dvh bg-black/55"
+          className="absolute inset-0 z-1 h-dvh bg-black/50 backdrop-blur-sm"
         />
       )}
     </>

@@ -7,6 +7,8 @@ export type ActiveSection =
 
 export type ActiveSeeSectionFilter = "all" | "present" | "absent";
 
+  // const [actualDateMark, setActualDateMark] = useState<Date>(new Date());
+
 interface AttendanceStore {
     activeSection: ActiveSection;
     setActiveSection: (page: ActiveSection) => void;
@@ -15,7 +17,13 @@ interface AttendanceStore {
     voiceNumber: number;
     setVoiceNumber: (voiceNumber: number) => void;
     activeSeeSectionFilter: ActiveSeeSectionFilter;
-    setActiveSeeSectionFilter: (seeSectionFilter: ActiveSeeSectionFilter) => void
+    setActiveSeeSectionFilter: (seeSectionFilter: ActiveSeeSectionFilter) => void;
+
+    actualDateMark: Date;
+    actualDateView: Date;
+
+    setActualDateMark: (newDate: Date) => void;
+    setActualDateView: (newDate: Date) => void;
 }
 
 export const useAttendanceStore = create<AttendanceStore>()(
@@ -46,6 +54,21 @@ export const useAttendanceStore = create<AttendanceStore>()(
             setActiveSeeSectionFilter: (value) => {
                 set ({
                     activeSeeSectionFilter: value
+                })
+            },
+
+            actualDateMark: new Date(),
+
+            actualDateView: new Date(),
+
+            setActualDateMark: (value) => {
+                set ({
+                    actualDateMark: value
+                })
+            },
+            setActualDateView: (value) => {
+                set ({
+                    actualDateView: value
                 })
             }
         }),
