@@ -80,10 +80,6 @@ function MemberComponent({ member }: { member: MemberType }) {
         if (!present) setPresent(true);
     };
 
-    const onOverviewClick = () => {
-        return
-    }
-
     return (
         <div className="relative">
             {(present && activeSection === "mark") && <div
@@ -92,13 +88,6 @@ function MemberComponent({ member }: { member: MemberType }) {
                 <ArrowCounterClockwiseIcon />
                 <span className="not-md:hidden">Cancel</span>
             </div>}
-
-            {(activeSection === "view") && <button 
-            onClick={onOverviewClick}
-            className="text-sm hover:bg-blue-200 absolute right-2 top-2 cursor-pointer text-blue-800 flex items-center gap-2 p-2 rounded border-blue-300 border bg-blue-100">
-                <EyeIcon />
-                <span className="not-md:hidden">Preview</span>
-            </button>}
 
             <div className={`${activeSection === "view" ? "cursor-default" : `${!present && "cursor-pointer hover:bg-gray-50"}`} w-full border-2 rounded p-3 flex gap-2 items-center ${present ? "border-green-500 cursor-default bg-green-50" : "bg-white"}`}
                 onClick={onComponentClick}
