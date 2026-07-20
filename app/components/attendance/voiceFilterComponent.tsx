@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CaretDownIcon } from "@phosphor-icons/react"
 import { usePresence } from "motion/react";
-import { usePresenceStore } from "@/app/stores/presence-store";
+import { useAttendanceStore } from "@/app/stores/attendance-store";
 type VoiceType = {
     voiceNumber: number,
     voiceAppellation: string
@@ -11,7 +11,7 @@ type VoiceType = {
 
 const voices: VoiceType[] = [{
     voiceNumber: 0,
-    voiceAppellation: "Toutes les voix"
+    voiceAppellation: "All voices"
 }, {
     voiceNumber: 1,
     voiceAppellation: "Soprano"
@@ -26,13 +26,13 @@ const voices: VoiceType[] = [{
     voiceAppellation: "Bass"
 }, {
     voiceNumber: 5,
-    voiceAppellation: "Musicien"
+    voiceAppellation: "Musician"
 }]
 
 export default function VoicePickerComponent() {
     const [chosenVoice, setChosenVoice] = useState<VoiceType>(voices[0]);
     const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
-    const { setVoiceNumber } = usePresenceStore();
+    const { setVoiceNumber } = useAttendanceStore();
 
     return <>
         <Popover

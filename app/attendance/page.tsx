@@ -1,19 +1,19 @@
 "use client";
 
-import { usePresenceStore } from "../stores/presence-store";
+import { useAttendanceStore } from "../stores/attendance-store";
 // import { Button } from "@/components/ui/button";
-import DatePickerSection from "../components/presence/datePickerSectionComponent";
-import MembersListComponent from "../components/presence/membersListComponent";
-import SearchComponent from "../components/presence/searchComponent";
-import VoicePickerComponent from "../components/presence/voiceFilterComponent";
+import DatePickerSection from "../components/attendance/datePickerSectionComponent";
+import MembersListComponent from "../components/attendance/membersListComponent";
+import SearchComponent from "../components/attendance/searchComponent";
+import VoicePickerComponent from "../components/attendance/voiceFilterComponent";
 import { CaretDoubleUpIcon, CaretDoubleDownIcon, WarningIcon } from "@phosphor-icons/react";
 import { useState } from "react";
-import AttendedFilterComponent from "../components/presence/attendedFilterComponent";
+import AttendedFilterComponent from "../components/attendance/attendedFilterComponent";
 
 const ACTIVE_STYLE = "text-black! border-black!";
 
-export default function Presence() {
-  const { activeSection, setActiveSection } = usePresenceStore();
+export default function Attendance() {
+  const { activeSection, setActiveSection } = useAttendanceStore();
   const [mainRise, setMainRise] = useState<boolean>(false);
 
   return (
@@ -21,10 +21,10 @@ export default function Presence() {
       <div className={`flex flex-col gap-3 xl:gap-5 ${mainRise && "hidden"}`}>
         <div className="flex flex-col gap-3">
           <h2 className="font-semibold text-5xl hidden xl:block py-2">
-            Présence
+          Attendance
           </h2>
           <p className="text-gray-500">
-            Confirmez ou vérifiez la présence des membres de la Chorale ici.
+            Confirm or verify choir members' attendance here.
           </p>
         </div>
         <div className="w-fit flex gap-3 items-center text-red-400 border-2 border-red-300 bg-red-50 p-3 rounded-md">
@@ -34,7 +34,7 @@ export default function Presence() {
               IMPORTANT !!!
             </p>
             <p>
-              Si vous choisissez de faire la presence, la date ne sera plus modifiable apres votre premier enregistrement.
+            If you mark attendance here, the date will no longer be editable after your first save.
             </p>
           </div>
         </div>
@@ -48,8 +48,8 @@ export default function Presence() {
           {mainRise ? <CaretDoubleDownIcon />
             : <CaretDoubleUpIcon />}
           <span className="not-md:hidden text-xs">
-            {mainRise ? "Retrecir"
-              : "Agrandir"}
+            {mainRise ? "Collapse"
+              : "Expand"}
           </span>
         </button>
       </div>
@@ -58,16 +58,16 @@ export default function Presence() {
         <div className="h-full flex flex-col border rounded-md border-gray-100 relative overflow-auto">
           <div className="*:hover:cursor-pointer w-full flex *:w-full *:p-5 *:border-b-2 *:border-transparent font-semibold text-gray-400">
             <button
-              onClick={() => setActiveSection("faire")}
-              className={`${activeSection === "faire" ? ACTIVE_STYLE : ""}`}
+            onClick={() => setActiveSection("mark")}
+            className={`${activeSection === "mark" ? ACTIVE_STYLE : ""}`}
             >
-              Faire la présence
+            Mark attendance
             </button>
             <button
-              onClick={() => setActiveSection("voir")}
-              className={`${activeSection === "voir" ? ACTIVE_STYLE : ""}`}
+              onClick={() => setActiveSection("view")}
+              className={`${activeSection === "view" ? ACTIVE_STYLE : ""}`}
             >
-              Voir les présents
+              View present members
             </button>
           </div>
           <div className="p-3 flex flex-col w-full h-full gap-3 overflow-auto">

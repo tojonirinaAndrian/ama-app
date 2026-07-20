@@ -2,10 +2,10 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export type ActivePage =
-  | "accueil"
-  | "liste"
-  | "presence"
-  | "a-propos";
+  | "home"
+  | "list"
+  | "attendance"
+  | "about";
 
 interface SidebarStore {
   activePage: ActivePage;
@@ -19,7 +19,7 @@ interface SidebarStore {
 export const useSidebarStore = create<SidebarStore>()(
   persist(
     (set) => ({
-      activePage: "accueil",
+      activePage: "home",
 
       setActivePage: (page) =>
         set({

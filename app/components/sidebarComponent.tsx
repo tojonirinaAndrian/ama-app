@@ -18,7 +18,7 @@ import { useSidebarStore } from "@/app/stores/sidebar-store";
 
 import Link from "next/link";
 
-// type ActivePage = "accueil" | "liste" | "presence" | "a-propos";
+// type ActivePage = "home" | "list" | "attendance" | "about";
 
 const ACTIVE_STYLE = "bg-gray-100 !text-black";
 
@@ -27,34 +27,38 @@ const menuItems = [
     title: "MENU",
     items: [
       {
-        key: "accueil",
-        label: "Accueil",
+        key: "home",
+        label: "Home",
         icon: HouseIcon,
-        href: "/accueil"
+        href: "/home"
       },
+
       {
-        key: "liste",
-        label: "Liste des membres",
+        key: "list",
+        label: "Members",
         icon: UserListIcon,
-        href: "/liste"
+        href: "/list"
       },
+
       {
-        key: "presence",
-        label: "Présence",
+        key: "attendance",
+        label: "Attendance",
         icon: CallBellIcon,
-        href: "/presence"
+        href: "/attendance"
       },
+
     ],
   },
   {
     title: "GENERAL",
     items: [
       {
-        key: "a-propos",
-        label: "À propos",
+        key: "about",
+        label: "About",
         icon: InfoIcon,
-        href: "/a-propos"
+        href: "/about"
       },
+
     ],
   },
 ] as const;
@@ -88,11 +92,11 @@ export default function SidebarComponent() {
 
   useEffect(() => {
     // Map pathname to menu item key
-    const pathToPageMap: Record<string, "accueil" | "liste" | "presence" | "a-propos"> = {
-      "/accueil": "accueil",
-      "/liste": "liste",
-      "/presence": "presence",
-      "/a-propos": "a-propos",
+    const pathToPageMap: Record<string, "home" | "list" | "attendance" | "about"> = {
+      "/home": "home",
+      "/list": "list",
+      "/attendance": "attendance",
+      "/about": "about",
     };
 
     const page = pathToPageMap[pathname];
@@ -127,7 +131,7 @@ export default function SidebarComponent() {
             {section.title === "GENERAL" && (
               <li className="flex cursor-pointer items-center gap-2 rounded-sm p-3 py-2.5 text-red-500 hover:bg-red-100">
                 <SignOutIcon size={22} />
-                <span>Se déconnecter</span>
+                <span>Sign out</span>
               </li>
             )}
           </ul>

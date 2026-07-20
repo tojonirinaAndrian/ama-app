@@ -2,12 +2,12 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export type ActiveSection =
-    | "faire"
-    | "voir"
+    | "mark"
+    | "view"
 
-export type ActiveSeeSectionFilter = "tous" | "presents" | "absents";
+export type ActiveSeeSectionFilter = "all" | "present" | "absent";
 
-interface PresenceStore {
+interface AttendanceStore {
     activeSection: ActiveSection;
     setActiveSection: (page: ActiveSection) => void;
     searchInput: string;
@@ -18,10 +18,10 @@ interface PresenceStore {
     setActiveSeeSectionFilter: (seeSectionFilter: ActiveSeeSectionFilter) => void
 }
 
-export const usePresenceStore = create<PresenceStore>()(
+export const useAttendanceStore = create<AttendanceStore>()(
     persist(
         (set) => ({
-            activeSection: "faire",
+            activeSection: "mark",
             setActiveSection: (section) => {
                 set({
                     activeSection: section,
@@ -42,7 +42,7 @@ export const usePresenceStore = create<PresenceStore>()(
                 })
             },
 
-            activeSeeSectionFilter: "tous",
+            activeSeeSectionFilter: "all",
             setActiveSeeSectionFilter: (value) => {
                 set ({
                     activeSeeSectionFilter: value
@@ -50,7 +50,7 @@ export const usePresenceStore = create<PresenceStore>()(
             }
         }),
         {
-            name: "presence-store",
+            name: "attendance-store",
         }
     )
 );

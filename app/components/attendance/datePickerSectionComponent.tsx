@@ -14,12 +14,12 @@ import {
 import { CalendarIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 
-// type MembreType = {
+// type MemberType = {
 //   id: number;
-//   cheminImage: string;
-//   nom: string;
-//   prenoms: string;
-//   pourcentage: number;
+//   imagePath: string;
+//   lastName: string;
+//   firstName: string;
+//   percentage: number;
 // };
 
 export default function DatePickerSection() {
@@ -73,7 +73,7 @@ export default function DatePickerSection() {
           <DialogContent>
             <DialogHeader className="text-left">
               <DialogTitle className="font-bold">
-                Choisir une date
+                Choose a date
               </DialogTitle>
               <DialogDescription>
                 {"Le "}

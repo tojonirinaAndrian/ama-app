@@ -1,9 +1,9 @@
 import Image from "next/image";
 
-export default function Liste() {
+export default function List() {
   return (
     <>
-    HELLO LISTe
+    HELLO LIST
     </>
   );
 }

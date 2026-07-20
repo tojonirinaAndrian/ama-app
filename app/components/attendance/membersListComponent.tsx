@@ -3,7 +3,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useDebounce } from 'use-debounce';
 import Image from 'next/image';
-import { usePresenceStore } from '@/app/stores/presence-store';
+import { useAttendanceStore } from '@/app/stores/attendance-store';
 import { useRef, useEffect, useState } from 'react'; // 1. Import useRef and useEffect
 import { ArrowCounterClockwiseIcon, EyeIcon } from "@phosphor-icons/react"
 import { Skeleton } from '@/components/ui/skeleton';
@@ -29,7 +29,7 @@ const voiceTypes = [
     { voiceNumber: 2, voiceAppellation: 'alto' },
     { voiceNumber: 3, voiceAppellation: 'tenor' },
     { voiceNumber: 4, voiceAppellation: 'bass' },
-    { voiceNumber: 5, voiceAppellation: 'musicien' },
+    { voiceNumber: 5, voiceAppellation: 'musician' },
 ];
 
 type MembersResponse = {
@@ -73,7 +73,7 @@ async function getMembers({
 
 function MemberComponent({ member }: { member: MemberType }) {
     const [present, setPresent] = useState<boolean>(false);
-    const { activeSection } = usePresenceStore();
+    const { activeSection } = useAttendanceStore();
 
     const onComponentClick = () => {
         if (activeSection === "voir") return
@@ -90,14 +90,14 @@ function MemberComponent({ member }: { member: MemberType }) {
                 onClick={() => { setPresent(false) }}
                 className="z-1 text-sm cursor-pointer flex gap-1 right-2 top-2 items-center hover:bg-yellow-300/65 absolute p-2 bg-yellow-200 rounded-md text-yellow-700 border border-yellow-500">
                 <ArrowCounterClockwiseIcon />
-                <span className="not-md:hidden">Annuler</span>
+                <span className="not-md:hidden">Cancel</span>
             </div>}
 
             {(activeSection === "voir") && <button 
             onClick={onOverviewClick}
             className="text-sm hover:bg-blue-200 absolute right-2 top-2 cursor-pointer text-blue-800 flex items-center gap-2 p-2 rounded border-blue-300 border bg-blue-100">
                 <EyeIcon />
-                <span className="not-md:hidden">Apercu</span>
+                <span className="not-md:hidden">Preview</span>
             </button>}
 
             <div className={`${activeSection === "voir" ? "cursor-default" : `${!present && "cursor-pointer hover:bg-gray-50"}`} w-full border-2 rounded p-3 flex gap-2 items-center ${present ? "border-green-500 cursor-default bg-green-50" : "bg-white"}`}
@@ -122,7 +122,7 @@ function MemberComponent({ member }: { member: MemberType }) {
 }
 
 export default function MembersListComponent() {
-    const { searchInput, voiceNumber } = usePresenceStore();
+    const { searchInput, voiceNumber } = useAttendanceStore();
     const [debouncedSearch] = useDebounce(searchInput, 500);
 
     // 2. Create a reference to the scrollable container
@@ -176,7 +176,7 @@ export default function MembersListComponent() {
     }
 
     if (error) {
-        return <p>Erreur de chargement</p>;
+        return <p>Loading error</p>;
     }
 
     return (
@@ -190,14 +190,14 @@ export default function MembersListComponent() {
                     <MemberComponent key={member.id} member={member} />
                 ))}
             </> : <>
-                <p className="p-2 text-gray-500">{"Il n'y a personne ici."}</p>
+                <p className="p-2 text-gray-500">{"There's no one here."}</p>
             </>}
             {hasNextPage && members.length > 0 && (
                 <button
                     onClick={() => fetchNextPage()}
                     className={` ${isFetchingNextPage && "hidden"} cursor-pointer w-full p-3 border border-gray-500 rounded-md hover:bg-gray-100 disabled:opacity-50`}
                 >
-                    {'Voir plus'}
+                    {'See more'}
                 </button>
             )}
             {isFetchingNextPage && <>

@@ -1,5 +1,5 @@
 'use client';
-import { usePresenceStore } from "@/app/stores/presence-store";
+import { useAttendanceStore } from "@/app/stores/attendance-store";
 import { MagnifyingGlassIcon, BackspaceIcon } from "@phosphor-icons/react";
 import { useEffect, useState, useRef } from "react";
 
@@ -7,7 +7,7 @@ export default function SearchComponent() {
     const [isInputting, setIsInputting] = useState<boolean>(false);
     // const [searchInput, setSearchInput] = useState<string>("");
     const searchInputRef = useRef<HTMLInputElement>(null);
-    const { searchInput, setSearchInput } = usePresenceStore();
+    const { searchInput, setSearchInput } = useAttendanceStore();
 
     useEffect(() => {
         const searchElement: HTMLInputElement = document.getElementById("searchInput") as HTMLInputElement;
@@ -56,7 +56,7 @@ export default function SearchComponent() {
             <input type="text" className={`z-1 h-full w-full focus:outline-none ${!isInputting ? "text-gray-800" : "text-black"}`}
                 id="searchInput"
                 ref={searchInputRef}
-                placeholder="Rechercher un membre..."
+                placeholder="Search a member..."
                 onChange={(e) => {
                     setSearchInput(e.target.value)
                 }}
@@ -67,7 +67,7 @@ export default function SearchComponent() {
                 className="cursor-pointer w-fit flex gap-2 px-3 items-center bg-white border rounded p-2 border-gray-300">
                 <BackspaceIcon size={18} />
                 <span className="">
-                    Annuler
+                    Cancel
                 </span>
             </button> : (!isInputting) && <span className="not-md:hidden absolute right-4 text-gray-400">
                 ctrl+K
