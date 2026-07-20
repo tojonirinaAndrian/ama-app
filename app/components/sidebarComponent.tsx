@@ -10,6 +10,7 @@ import {
   InfoIcon,
   ListIcon,
   XIcon,
+  GraphIcon
 } from "@phosphor-icons/react";
 
 import { Icon } from "@phosphor-icons/react";
@@ -35,7 +36,7 @@ const menuItems = [
 
       {
         key: "list",
-        label: "Members",
+        label: "List of members",
         icon: UserListIcon,
         href: "/list"
       },
@@ -47,6 +48,12 @@ const menuItems = [
         href: "/attendance"
       },
 
+      {
+        key: "stats",
+        label: "Stats",
+        icon: GraphIcon,
+        href: "/stats"
+      },
     ],
   },
   {
@@ -71,18 +78,17 @@ interface NavItemProps {
   href: string;
 }
 
-function NavItem({ active, label, icon: Icon, onClick, href}: NavItemProps) {
+function NavItem({ active, label, icon: Icon, onClick, href }: NavItemProps) {
   return (
     <Link
-    href={href}
-    onClick={onClick}
-    className={`flex items-center gap-2 rounded-sm p-3 py-2.5 cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-black ${
-        active ? ACTIVE_STYLE : ""
-    }`}
->
-    <Icon size={22} />
-    <span>{label}</span>
-</Link>
+      href={href}
+      onClick={onClick}
+      className={`flex items-center gap-2 rounded-sm p-3 py-2.5 cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-black ${active ? ACTIVE_STYLE : ""
+        }`}
+    >
+      <Icon size={22} />
+      <span>{label}</span>
+    </Link>
   );
 }
 
@@ -92,11 +98,12 @@ export default function SidebarComponent() {
 
   useEffect(() => {
     // Map pathname to menu item key
-    const pathToPageMap: Record<string, "home" | "list" | "attendance" | "about"> = {
+    const pathToPageMap: Record<string, "home" | "list" | "attendance" | "about" | "stats"> = {
       "/home": "home",
       "/list": "list",
       "/attendance": "attendance",
       "/about": "about",
+      "/stats": "stats"
     };
 
     const page = pathToPageMap[pathname];
@@ -151,16 +158,16 @@ export default function SidebarComponent() {
           className="border-b border-gray-100 p-5 bg-white"
         >
           <div className="flex items-center gap-2 w-fit"
-          onClick={toggleMenu}>
-          {menuOpen ? (
-            <XIcon size={22} weight="bold" />
-          ) : (
-            <ListIcon size={22} weight="bold" />
-          )}
+            onClick={toggleMenu}>
+            {menuOpen ? (
+              <XIcon size={22} weight="bold" />
+            ) : (
+              <ListIcon size={22} weight="bold" />
+            )}
 
-          <span className="text-xl font-bold">Menu</span>  
+            <span className="text-xl font-bold">Menu</span>
           </div>
-          
+
         </button>
 
         {menuOpen && (

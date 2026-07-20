@@ -5,7 +5,8 @@ export type ActivePage =
   | "home"
   | "list"
   | "attendance"
-  | "about";
+  | "about"
+  | "stats";
 
 interface SidebarStore {
   activePage: ActivePage;
