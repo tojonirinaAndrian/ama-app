@@ -76,7 +76,7 @@ function MemberComponent({ member }: { member: MemberType }) {
     const { activeSection } = useAttendanceStore();
 
     const onComponentClick = () => {
-        if (activeSection === "voir") return
+        if (activeSection === "view") return
         if (!present) setPresent(true);
     };
 
@@ -86,21 +86,21 @@ function MemberComponent({ member }: { member: MemberType }) {
 
     return (
         <div className="relative">
-            {(present && activeSection === "faire") && <div
+            {(present && activeSection === "mark") && <div
                 onClick={() => { setPresent(false) }}
                 className="z-1 text-sm cursor-pointer flex gap-1 right-2 top-2 items-center hover:bg-yellow-300/65 absolute p-2 bg-yellow-200 rounded-md text-yellow-700 border border-yellow-500">
                 <ArrowCounterClockwiseIcon />
                 <span className="not-md:hidden">Cancel</span>
             </div>}
 
-            {(activeSection === "voir") && <button 
+            {(activeSection === "view") && <button 
             onClick={onOverviewClick}
             className="text-sm hover:bg-blue-200 absolute right-2 top-2 cursor-pointer text-blue-800 flex items-center gap-2 p-2 rounded border-blue-300 border bg-blue-100">
                 <EyeIcon />
                 <span className="not-md:hidden">Preview</span>
             </button>}
 
-            <div className={`${activeSection === "voir" ? "cursor-default" : `${!present && "cursor-pointer hover:bg-gray-50"}`} w-full border-2 rounded p-3 flex gap-2 items-center ${present ? "border-green-500 cursor-default bg-green-50" : "bg-white"}`}
+            <div className={`${activeSection === "view" ? "cursor-default" : `${!present && "cursor-pointer hover:bg-gray-50"}`} w-full border-2 rounded p-3 flex gap-2 items-center ${present ? "border-green-500 cursor-default bg-green-50" : "bg-white"}`}
                 onClick={onComponentClick}
             >
                 <Image

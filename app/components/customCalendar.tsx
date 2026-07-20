@@ -150,12 +150,12 @@ export default function CustomCalendar({ closeComponent, currentlyChosenDate, se
                 <button onClick={onTodayClick}
                     className="p-3 cursor-pointer font-semibold border border-gray-500 rounded"
                 >
-                    {"Aujourd'hui"}
+                    {"Today"}
                 </button>
                 <button
                     className="p-3 cursor-pointer font-semibold border border-gray-500 rounded"
                     onClick={closeComponent}>
-                    Confirmer
+                    Confirm
                 </button>
             </div>
 

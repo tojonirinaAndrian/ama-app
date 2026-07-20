@@ -24,7 +24,7 @@ export default function Attendance() {
           Attendance
           </h2>
           <p className="text-gray-500">
-            Confirm or verify choir members' attendance here.
+            {`Confirm or verify choir members' attendance here.`}
           </p>
         </div>
         <div className="w-fit flex gap-3 items-center text-red-400 border-2 border-red-300 bg-red-50 p-3 rounded-md">
@@ -75,7 +75,7 @@ export default function Attendance() {
               <DatePickerSection />
               <VoicePickerComponent />
             </div>
-            {(activeSection === "voir") && <AttendedFilterComponent />}
+            {(activeSection === "view") && <AttendedFilterComponent />}
             <SearchComponent />
             <MembersListComponent />
           </div>

@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CaretDownIcon } from "@phosphor-icons/react"
-import { usePresence } from "motion/react";
 import { useAttendanceStore } from "@/app/stores/attendance-store";
 type VoiceType = {
     voiceNumber: number,
