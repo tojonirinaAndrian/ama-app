@@ -3,7 +3,7 @@
 import { useAttendanceStore } from "../stores/attendance-store";
 // import { Button } from "@/components/ui/button";
 import DatePickerSection from "../components/attendance/datePickerSectionComponent";
-import MembersListComponent from "../components/attendance/membersListComponent";
+import MembersListComponent from "../components/attendance/attendanceMembersListComponent";
 import SearchComponent from "../components/attendance/searchComponent";
 import VoicePickerComponent from "../components/attendance/voiceFilterComponent";
 import { CaretDoubleUpIcon, CaretDoubleDownIcon, WarningIcon } from "@phosphor-icons/react";

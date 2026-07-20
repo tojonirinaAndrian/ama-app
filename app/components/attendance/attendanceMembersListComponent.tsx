@@ -5,7 +5,7 @@ import { useDebounce } from 'use-debounce';
 import Image from 'next/image';
 import { useAttendanceStore } from '@/app/stores/attendance-store';
 import { useRef, useEffect, useState } from 'react'; // 1. Import useRef and useEffect
-import { ArrowCounterClockwiseIcon, EyeIcon } from "@phosphor-icons/react"
+import { ArrowCounterClockwiseIcon } from "@phosphor-icons/react"
 import { Skeleton } from '@/components/ui/skeleton';
 
 type MemberType = {
@@ -110,7 +110,7 @@ function MemberComponent({ member }: { member: MemberType }) {
     );
 }
 
-export default function MembersListComponent() {
+export default function AttendanceMembersListComponent() {
     const { searchInput, voiceNumber } = useAttendanceStore();
     const [debouncedSearch] = useDebounce(searchInput, 500);
 
