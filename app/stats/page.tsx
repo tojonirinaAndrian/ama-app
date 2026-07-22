@@ -11,8 +11,8 @@ export default function List() {
   const [mainRise, setMainRise] = useState<boolean>(false);
 
   return (
-    <div className="flex flex-col h-full gap-2 xl:gap-5">
-      <div className="flex justify-between items-end w-full">
+    <div className="flex flex-col h-full gap-3 xl:gap-5">
+      <div className="flex justify-between items-start w-full">
         <div className={`flex flex-col xl:gap-2 ${mainRise && "hidden"}`}>
           <h2 className="font-semibold xl:text-5xl text-2xl block py-2">
             Stats
@@ -26,7 +26,7 @@ export default function List() {
           01 Jan - 01 April
         </button>
       </div>
-      <div className={`space-y-2 bg-gray-50/20 border rounded p-3 ${mainRise && "hidden"}`}>
+      <div className={`space-y-2 bg-gray-50/20 border rounded p-2 ${mainRise && "hidden"}`}>
         <div className="w-full flex *:w-full *:bg-white *:rounded gap-2 *:p-5 *:border">
           <div className="space-y-5">
             <p className="text-gray-600">General attendance rate</p>
