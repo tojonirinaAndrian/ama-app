@@ -1,11 +1,11 @@
-
+"use client"
 import { useAttendanceStore } from "../stores/attendance-store";
 // import { Button } from "@/components/ui/button";
 import DatePickerSection from "../components/attendance/datePickerSectionComponent";
 import MembersListComponent from "../components/attendance/attendanceMembersListComponent";
 import SearchComponent from "../components/attendance/searchComponent";
 import VoicePickerComponent from "../components/attendance/voiceFilterComponent";
-import { CaretDoubleUpIcon, CaretDoubleDownIcon } from "@phosphor-icons/react";
+import { CaretDoubleUpIcon, CaretDoubleDownIcon, CaretDownIcon, CaretRightIcon, CaretLeftIcon, CaretLeft } from "@phosphor-icons/react";
 import { useState } from "react";
 import AttendedFilterComponent from "../components/attendance/attendedFilterComponent";
 
@@ -78,10 +78,35 @@ export default function List() {
 
             </div>
             <MembersListComponent />
-            {activeSection === "mark" && <div className="md:hidden flex *:w-full">
-              <CancelAllMarksComponent isCancelingAll={isCancelingAll} setIsCancelingAll={setIsCancelingAll} />
+            <div className="flex w-full justify-between text-gray-600 items-center">
+              <div className="flex gap-10 items-center">
+                <div className="flex gap-2 items-center ">
+                  <span>Show</span>
+                  <button className="p-2 border border-gray-200 rounded text-black flex gap-2 items-center cursor-pointer">
+                    20 <CaretDownIcon />
+                  </button>
+                  <span>per page</span>
+                </div>
+                <div>
+                 1 - 20 of 120
+                </div>
+              </div>
+              <div className="flex gap-5">
+                <button className="w-10 py-2 flex justify-center items-center border border-gray-200 hover:bg-gray-100 cursor-pointer rounded">
+                  <CaretLeftIcon />
+                </button>
+                <div className="flex gap-2 *:border *:border-gray-200 *:hover:bg-gray-100 *:w-10 *:py-2 text-center *:rounded">
+                  <button className="cursor-pointer">1</button>
+                  <button className="cursor-pointer">2</button>
+                  <button className="cursor-pointer">3</button>
+                  <button >...</button>
+                  <button className="cursor-pointer">30</button>
+                </div>
+                <button className="w-10 py-2 flex justify-center items-center border border-gray-200 hover:bg-gray-100 cursor-pointer rounded">
+                  <CaretRightIcon />
+                </button>
+              </div>
             </div>
-            }
           </div>
           {/* TODO: Add mock users */}
         </div>
