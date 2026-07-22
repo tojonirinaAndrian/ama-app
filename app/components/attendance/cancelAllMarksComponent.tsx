@@ -40,7 +40,7 @@ export default function CancelAllMarksComponent({ isCancelingAll, setIsCanceling
                 <button className="border-gray-500 hover:bg-gray-50/80"
                     onClick={() => setIsCancelingAll(false)}
                 >Keep progress</button>
-                <button className="bg-red-100 hover:bg-red-200/80 text-red-500 border-red-400">Reset</button>
+                <button className="text-red-700 hover:bg-red-300/80 bg-red-200 border-red-500">Reset</button>
             </div>
         </DialogContent>
     </Dialog>
