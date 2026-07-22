@@ -1,15 +1,9 @@
 "use client"
-import { useAttendanceStore } from "../stores/attendance-store";
-// import { Button } from "@/components/ui/button";
-import DatePickerSection from "../components/attendance/datePickerSectionComponent";
 import MembersListComponent from "../components/attendance/attendanceMembersListComponent";
 import SearchComponent from "../components/attendance/searchComponent";
 import VoicePickerComponent from "../components/attendance/voiceFilterComponent";
 import { CaretDoubleUpIcon, CaretDoubleDownIcon, CaretDownIcon, CaretRightIcon, CaretLeftIcon, CalendarIcon } from "@phosphor-icons/react";
 import { useState } from "react";
-import AttendedFilterComponent from "../components/attendance/attendedFilterComponent";
-
-import CancelAllMarksComponent from "../components/attendance/cancelAllMarksComponent";
 
 const ACTIVE_STYLE = "text-black! border-black!";
 
@@ -17,8 +11,8 @@ export default function List() {
   const [mainRise, setMainRise] = useState<boolean>(false);
 
   return (
-    <div className="flex flex-col h-full gap-3 xl:gap-5">
-      <div className="flex justify-between items-start w-full">
+    <div className="flex flex-col h-full gap-2 xl:gap-5">
+      <div className="flex justify-between items-end w-full">
         <div className={`flex flex-col xl:gap-2 ${mainRise && "hidden"}`}>
           <h2 className="font-semibold xl:text-5xl text-2xl block py-2">
             Stats
@@ -28,9 +22,43 @@ export default function List() {
           </p>
         </div>
         <button className="p-2.5 px-4 cursor-pointer border-gray-500 rounded border flex gap-2 items-center ml-auto">
-          <CalendarIcon size={18}/>
-          From 01 Jan - 01 April
+          <CalendarIcon size={18} />
+          01 Jan - 01 April
         </button>
+      </div>
+      <div className={`space-y-2 bg-gray-50/20 border rounded p-3 ${mainRise && "hidden"}`}>
+        <div className="w-full flex *:w-full *:bg-white *:rounded gap-2 *:p-5 *:border">
+          <div className="space-y-5">
+            <p className="text-gray-600">General attendance rate</p>
+            <p className="text-5xl font-semibold">90%</p>
+          </div>
+          <div className="space-y-5">
+            <p className="text-gray-600">Session days number</p>
+            <p className="text-5xl font-semibold">36</p>
+          </div>
+        </div>
+        <div className="w-full flex *:w-full *:bg-white *:rounded gap-2 *:p-5 *:border">
+          <div className="space-y-5">
+            <p className="text-gray-600">1, Soprano</p>
+            <p className="text-5xl font-semibold">45%</p>
+          </div>
+          <div className="space-y-5">
+            <p className="text-gray-600">2, Alto</p>
+            <p className="text-5xl font-semibold">20%</p>
+          </div>
+          <div className="space-y-5">
+            <p className="text-gray-600">3, Tenor</p>
+            <p className="text-5xl font-semibold">80%</p>
+          </div>
+          <div className="space-y-5">
+            <p className="text-gray-600">4, Bass</p>
+            <p className="text-5xl font-semibold">95%</p>
+          </div>
+          <div className="space-y-5">
+            <p className="text-gray-600">5, Musicians</p>
+            <p className="text-5xl font-semibold">95%</p>
+          </div>
+        </div>
       </div>
 
       <div className="relative">
