@@ -128,7 +128,7 @@ export default function List() {
             <StatCard key={card.title} title={card.title} value={card.value} />
           ))}
         </div>
-        <div className="w-full flex gap-2 flex-wrap">
+        <div className="w-full flex *:w-full *:bg-white *:rounded gap-2 *:p-5 *:border">
           {voiceStats.map((card) => (
             <StatCard key={card.title} title={card.title} value={card.value} />
           ))}
