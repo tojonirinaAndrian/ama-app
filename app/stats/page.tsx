@@ -1,11 +1,106 @@
-"use client"
+"use client";
+
 import MembersListComponent from "../components/attendance/attendanceMembersListComponent";
 import SearchComponent from "../components/attendance/searchComponent";
 import VoicePickerComponent from "../components/attendance/voiceFilterComponent";
-import { CaretDoubleUpIcon, CaretDoubleDownIcon, CaretDownIcon, CaretRightIcon, CaretLeftIcon, CalendarIcon } from "@phosphor-icons/react";
+import {
+  CaretDoubleUpIcon,
+  CaretDoubleDownIcon,
+  CaretDownIcon,
+  CaretRightIcon,
+  CaretLeftIcon,
+  CalendarIcon,
+} from "@phosphor-icons/react";
 import { useState } from "react";
 
-const ACTIVE_STYLE = "text-black! border-black!";
+type StatCardProps = {
+  title: string;
+  value: string;
+};
+
+type PaginationControlsProps = {
+  currentPage: number;
+  itemsPerPage: number;
+  totalItems: number;
+};
+
+const pageConfig = {
+  title: "Stats",
+  description: "Check the choir's statistics here.",
+  dateRange: "01 Jan - 01 April",
+};
+
+const summaryCards = [
+  { title: "General attendance rate", value: "90%" },
+  { title: "Session days number", value: "36" },
+];
+
+const voiceStats = [
+  { title: "1, Soprano", value: "45%" },
+  { title: "2, Alto", value: "20%" },
+  { title: "3, Tenor", value: "80%" },
+  { title: "4, Bass", value: "95%" },
+  { title: "5, Musicians", value: "95%" },
+];
+
+function StatCard({ title, value }: StatCardProps) {
+  return (
+    <div className="w-full rounded border bg-white p-5 space-y-5">
+      <p className="text-gray-600">{title}</p>
+      <p className="text-5xl font-semibold">{value}</p>
+    </div>
+  );
+}
+
+function PaginationControls({
+  currentPage,
+  itemsPerPage,
+  totalItems,
+}: PaginationControlsProps) {
+  const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
+  const visiblePages = Array.from({ length: Math.min(totalPages, 5) }, (_, index) => index + 1);
+  const startItem = (currentPage - 1) * itemsPerPage + 1;
+  const endItem = Math.min(currentPage * itemsPerPage, totalItems);
+
+  return (
+    <div className="flex w-full justify-between text-gray-600 items-center">
+      <div className="flex gap-10 items-center">
+        <div className="flex gap-2 items-center">
+          <span>Show</span>
+          <button className="p-2 border border-gray-200 rounded text-black flex gap-2 items-center cursor-pointer">
+            {itemsPerPage} <CaretDownIcon />
+          </button>
+          <span>per page</span>
+        </div>
+        <div>
+          {startItem} - {endItem} of {totalItems}
+        </div>
+      </div>
+      <div className="flex gap-5">
+        <button className="w-10 py-2 flex justify-center items-center border border-gray-200 hover:bg-gray-100 cursor-pointer rounded">
+          <CaretLeftIcon />
+        </button>
+        <div className="flex gap-2 *:border *:border-gray-200 *:hover:bg-gray-100 *:w-10 *:py-2 text-center *:rounded">
+          {visiblePages.map((page) => (
+            <button
+              key={page}
+              className={`cursor-pointer ${page === currentPage ? "bg-gray-100" : ""}`}
+            >
+              {page}
+            </button>
+          ))}
+          {totalPages > 5 ? <button>...</button> : null}
+          {totalPages > 5 ? (
+            <button className="cursor-pointer">{totalPages}</button>
+          ) : null}
+        </div>
+        <button className="w-10 py-2 flex justify-center items-center border border-gray-200 hover:bg-gray-100 cursor-pointer rounded">
+          <CaretRightIcon />
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function List() {
   const [mainRise, setMainRise] = useState<boolean>(false);
@@ -23,41 +118,20 @@ export default function List() {
         </div>
         <button className="p-2.5 px-4 cursor-pointer border-gray-500 rounded border flex gap-2 items-center ml-auto">
           <CalendarIcon size={18} />
-          01 Jan - 01 April
+          {pageConfig.dateRange}
         </button>
       </div>
-      <div className={`space-y-2 bg-gray-50/20 border rounded p-2 ${mainRise && "hidden"}`}>
-        <div className="w-full flex *:w-full *:bg-white *:rounded gap-2 *:p-5 *:border">
-          <div className="space-y-5">
-            <p className="text-gray-600">General attendance rate</p>
-            <p className="text-5xl font-semibold">90%</p>
-          </div>
-          <div className="space-y-5">
-            <p className="text-gray-600">Session days number</p>
-            <p className="text-5xl font-semibold">36</p>
-          </div>
+
+      <div className={`space-y-2 bg-gray-50/20 border rounded p-2 ${mainRise ? "hidden" : ""}`}>
+        <div className="w-full flex gap-2">
+          {summaryCards.map((card) => (
+            <StatCard key={card.title} title={card.title} value={card.value} />
+          ))}
         </div>
-        <div className="w-full flex *:w-full *:bg-white *:rounded gap-2 *:p-5 *:border">
-          <div className="space-y-5">
-            <p className="text-gray-600">1, Soprano</p>
-            <p className="text-5xl font-semibold">45%</p>
-          </div>
-          <div className="space-y-5">
-            <p className="text-gray-600">2, Alto</p>
-            <p className="text-5xl font-semibold">20%</p>
-          </div>
-          <div className="space-y-5">
-            <p className="text-gray-600">3, Tenor</p>
-            <p className="text-5xl font-semibold">80%</p>
-          </div>
-          <div className="space-y-5">
-            <p className="text-gray-600">4, Bass</p>
-            <p className="text-5xl font-semibold">95%</p>
-          </div>
-          <div className="space-y-5">
-            <p className="text-gray-600">5, Musicians</p>
-            <p className="text-5xl font-semibold">95%</p>
-          </div>
+        <div className="w-full flex gap-2 flex-wrap">
+          {voiceStats.map((card) => (
+            <StatCard key={card.title} title={card.title} value={card.value} />
+          ))}
         </div>
       </div>
 
@@ -75,6 +149,7 @@ export default function List() {
           </span>
         </button>
       </div>
+
       <div className="relative h-full flex flex-col overflow-auto">
         <div className="h-full flex flex-col border rounded-md border-gray-100 relative overflow-auto">
           <div className="p-3 flex flex-col w-full h-full gap-3 overflow-auto">
@@ -83,40 +158,12 @@ export default function List() {
               <VoicePickerComponent />
             </div>
             <MembersListComponent />
-            <div className="flex w-full justify-between text-gray-600 items-center">
-              <div className="flex gap-10 items-center">
-                <div className="flex gap-2 items-center ">
-                  <span>Show</span>
-                  <button className="p-2 border border-gray-200 rounded text-black flex gap-2 items-center cursor-pointer">
-                    20 <CaretDownIcon />
-                  </button>
-                  <span>per page</span>
-                </div>
-                <div>
-                  1 - 20 of 120
-                </div>
-              </div>
-              <div className="flex gap-5">
-                <button className="w-10 py-2 flex justify-center items-center border border-gray-200 hover:bg-gray-100 cursor-pointer rounded">
-                  <CaretLeftIcon />
-                </button>
-                <div className="flex gap-2 *:border *:border-gray-200 *:hover:bg-gray-100 *:w-10 *:py-2 text-center *:rounded">
-                  <button className="cursor-pointer">1</button>
-                  <button className="cursor-pointer">2</button>
-                  <button className="cursor-pointer">3</button>
-                  <button >...</button>
-                  <button className="cursor-pointer">30</button>
-                </div>
-                <button className="w-10 py-2 flex justify-center items-center border border-gray-200 hover:bg-gray-100 cursor-pointer rounded">
-                  <CaretRightIcon />
-                </button>
-              </div>
-            </div>
+            <PaginationControls currentPage={1} itemsPerPage={20} totalItems={120} />
           </div>
           {/* TODO: Add mock users */}
         </div>
       </div>
     </div>
-  )
+  );
 }
 
