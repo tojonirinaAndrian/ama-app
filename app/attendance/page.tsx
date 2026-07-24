@@ -12,7 +12,7 @@ import AttendedFilterComponent from "../components/attendance/attendedFilterComp
 
 import CancelAllMarksComponent from "../components/attendance/cancelAllMarksComponent";
 
-const ACTIVE_STYLE = "text-black! border-black!";
+const ACTIVE_STYLE = "text-blue-700! border-blue-700!";
 
 export default function Attendance() {
   const { activeSection, setActiveSection } = useAttendanceStore();
@@ -30,7 +30,7 @@ export default function Attendance() {
         </p>
       </div>
       <div className="relative">
-        <button className="bg-gray-100 border border-gray-200 rounded p-1.5 absolute right-2 -top-1 xl:top-0 z-2 cursor-pointer hover:bg-gray-200 flex gap-1 text-gray-800"
+        <button className="bg-gray-50 border border-gray-200 rounded p-1.5 sm:px-2 absolute right-2 -top-1 xl:top-0 z-2 cursor-pointer hover:bg-gray-100 flex gap-1 text-gray-800"
           onClick={() => {
             setMainRise(!mainRise)
           }}
