@@ -90,7 +90,7 @@ function MemberComponent({ member }: { member: MemberType }) {
                 <span className="not-md:hidden">Cancel</span>
             </div>}
 
-            <div className={`${activeSection === "view" ? "cursor-default" : `${!present && "cursor-pointer hover:bg-gray-50"}`} w-full border-2 rounded p-3 flex gap-2 items-center ${present ? "border-green-500 cursor-default bg-green-50" : "bg-white"}`}
+            <div className={`${activeSection === "view" ? "cursor-default" : `${!present && "cursor-pointer hover:bg-gray-50"}`} w-full border rounded p-3 flex gap-2 items-center ${present ? "border-green-200 cursor-default bg-green-50" : "bg-white"}`}
                 onClick={onComponentClick}
             >
                 <Image
@@ -173,7 +173,7 @@ export default function AttendanceMembersListComponent() {
         /* 4. Attach the ref to this overflow-auto element */
         <div
             ref={containerRef}
-            className="h-full bg-gray-50/20 border rounded overflow-auto flex flex-col gap-2 p-2.5 md:p-3"
+            className="h-full bg-gray-50/20 border rounded overflow-auto flex flex-col gap-2 p-2"
         >
             {members.length >= 1 ? <>
                 {members.map((member) => (
