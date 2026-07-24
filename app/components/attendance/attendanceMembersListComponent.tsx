@@ -85,7 +85,7 @@ function MemberComponent({ member }: { member: MemberType }) {
         <div className="relative">
             {(present && activeSection === "mark") && <div
                 onClick={() => { setPresent(false) }}
-                className="z-1 text-sm cursor-pointer flex gap-1 right-2 top-2 items-center hover:bg-yellow-300/65 absolute p-2 bg-yellow-200 rounded-md text-yellow-700 border border-yellow-500">
+                className="z-1 text-sm cursor-pointer flex gap-1 right-2 top-2 items-center hover:bg-yellow-200/80 absolute p-2 bg-yellow-100 rounded-md text-yellow-700 border border-yellow-200">
                 <ArrowCounterClockwiseIcon />
                 <span className="not-md:hidden">Cancel</span>
             </div>}
