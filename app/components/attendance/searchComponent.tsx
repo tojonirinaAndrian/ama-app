@@ -1,6 +1,6 @@
 'use client';
 import { useAttendanceStore } from "@/app/stores/attendance-store";
-import { MagnifyingGlassIcon, BackspaceIcon } from "@phosphor-icons/react";
+import { MagnifyingGlassIcon, BackspaceIcon, XIcon } from "@phosphor-icons/react";
 import { useEffect, useState, useRef } from "react";
 
 export default function SearchComponent() {
@@ -44,7 +44,7 @@ export default function SearchComponent() {
 
     return <>
         <div
-            className={`w-full xl:w-[45%] md:w-[60%] relative border flex gap-1 p-1 items-center rounded border-gray-200 bg-gray-50 ${isInputting && "outline outline-gray-500 bg-white"}`}>
+            className={`w-full xl:w-[45%] md:w-[60%] relative border flex gap-1 p-1 items-center rounded border-gray-200 bg-gray-50/20 ${isInputting && "outline outline-gray-500 bg-white"}`}>
 
             <div className="p-1.5 pr-1 cursor-text"
                 onClick={() => {
@@ -64,11 +64,8 @@ export default function SearchComponent() {
             />
             {(searchInput.length >= 1) ? <button
                 onClick={onCancelClick}
-                className="cursor-pointer w-fit flex gap-2 px-3 items-center bg-white border rounded p-2 border-gray-300">
-                <BackspaceIcon size={18} />
-                <span className="">
-                    Cancel
-                </span>
+                className="cursor-pointer w-fit flex gap-2 px-3 items-center bg-white border rounded p-2 border-gray-100">
+                <XIcon size={18} />
             </button> : (!isInputting) && <span className="not-md:hidden absolute right-4 text-gray-400">
                 ctrl+K
             </span>}
