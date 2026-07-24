@@ -19,7 +19,7 @@ export default function CancelAllMarksComponent({ isCancelingAll, setIsCanceling
     return <Dialog open={isCancelingAll} onOpenChange={setIsCancelingAll}>
         <DialogTrigger>
             <p
-                className="cursor-pointer hover:bg-yellow-200/80 bg-yellow-100 rounded-md text-yellow-700 border border-yellow-200 flex gap-1 items-center px-3 p-2 not-md:p-3"
+                className="cursor-pointer border-red-200 hover:bg-red-50 bg-white rounded-md text-red-500 border flex gap-1 items-center px-3 p-2 not-md:p-3"
             >
                 <ArrowCounterClockwiseIcon />
                 <span>
