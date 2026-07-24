@@ -31,7 +31,7 @@ export default function DatePickerSection() {
           <PopoverTrigger
           >
             <p
-              className="p-2.5 px-4 border-gray-500 text-black border flex gap-2 items-center rounded-md cursor-pointer"
+              className="p-2.5 px-4 border-gray-200 text-black border flex gap-2 items-center rounded-md cursor-pointer"
             >
               <CalendarIcon size={18} />
               {activeSection === "mark" ?
@@ -57,7 +57,7 @@ export default function DatePickerSection() {
           // disabled={membresPresents.length > 0}
           >
             <p
-              className="p-2.5 px-4 border-gray-500 text-black border flex gap-2 items-center rounded-md cursor-pointer"
+              className="p-2.5 px-4 border-gray-200 text-black border flex gap-2 items-center rounded-md cursor-pointer"
             >
               <CalendarIcon size={18} />
                 <span>{new Date(actualDateMark).toLocaleDateString("en-GB")}</span>

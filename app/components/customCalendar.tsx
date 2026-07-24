@@ -78,7 +78,7 @@ export default function CustomCalendar({ closeComponent, currentlyChosenDate, se
 
     return (
         <div className="flex flex-col gap-2 xl:p-2">
-            <div className="w-full flex gap-1 flex-col border border-gray-300 rounded-md p-3 bg-white">
+            <div className="w-full flex gap-1 flex-col border border-gray-200 rounded-md p-3 bg-white">
                 {/* Header Control Panel */}
                 <div className="flex justify-between items-center px-1">
                     <button
@@ -130,10 +130,10 @@ export default function CustomCalendar({ closeComponent, currentlyChosenDate, se
                                 disabled={isFuture}
                                 onClick={() => setCurrentlyChosenDate(day)}
                                 className={`
-                                p-2.5 flex items-center justify-center rounded-md text-sm font-medium transition-all duration-100
+                                p-2.5 border flex items-center justify-center rounded-md text-sm font-medium transition-all duration-100
                                 ${isSelected
-                                        ? "bg-black text-white"
-                                        : "hover:bg-gray-100 text-black"
+                                        ? "bg-blue-100 text-blue-800 border-blue-300"
+                                        : "hover:bg-gray-100 text-black border-transparent"
                                     }
                                 ${!isCurrentMonth && !isSelected ? "text-gray-400" : ""}
                                 ${isToday(day) && !isSelected ? "ring-2 ring-gray-100 ring-offset-1" : ""}
@@ -148,12 +148,12 @@ export default function CustomCalendar({ closeComponent, currentlyChosenDate, se
             </div>
             <div className="flex gap-1 w-full *:w-full">
                 <button onClick={onTodayClick}
-                    className="p-3 cursor-pointer font-semibold border border-gray-500 rounded hover:bg-gray-50/80"
+                    className="p-3 cursor-pointer font-semibold border border-gray-200 rounded hover:bg-gray-50/80"
                 >
                     {"Today"}
                 </button>
                 <button
-                    className="p-3 cursor-pointer font-semibold border border-gray-500 rounded hover:bg-gray-50/80"
+                    className="p-3 cursor-pointer font-semibold border text-blue-700 border-blue-200 rounded hover:bg-blue-50"
                     onClick={closeComponent}>
                     Confirm
                 </button>
