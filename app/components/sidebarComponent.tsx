@@ -21,7 +21,7 @@ import Link from "next/link";
 
 // type ActivePage = "home" | "list" | "attendance" | "about";
 
-const ACTIVE_STYLE = "bg-gray-100 !text-black";
+const ACTIVE_STYLE = "bg-blue-100 !text-blue-800 !border-blue-200 text-blue-700";
 
 const menuItems = [
   {
@@ -83,7 +83,7 @@ function NavItem({ active, label, icon: Icon, onClick, href }: NavItemProps) {
     <Link
       href={href}
       onClick={onClick}
-      className={`flex items-center gap-2 rounded-sm p-3 py-2.5 cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-black ${active ? ACTIVE_STYLE : ""
+      className={`flex items-center gap-2 border rounded p-3 py-2.5 cursor-pointer text-gray-700 ${active ? ACTIVE_STYLE : "hover:bg-blue-50 hover:text-blue-800 border-transparent"
         }`}
     >
       <Icon size={22} />
