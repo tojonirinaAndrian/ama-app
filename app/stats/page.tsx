@@ -45,9 +45,9 @@ const voiceStats = [
 
 function StatCard({ title, value }: StatCardProps) {
   return (
-    <div className="w-full rounded border bg-white p-5 space-y-5">
+    <div className="w-full rounded border bg-white p-3 md:p-5 space-y-2 md:space-y-5">
       <p className="text-gray-600">{title}</p>
-      <p className="text-5xl font-semibold">{value}</p>
+      <p className="text-3xl md:text-5xl font-semibold">{value}</p>
     </div>
   );
 }
@@ -63,7 +63,7 @@ function PaginationControls({
   const endItem = Math.min(currentPage * itemsPerPage, totalItems);
 
   return (
-    <div className="flex w-full justify-between text-gray-600 items-center">
+    <div className="not-md:flex-col gap-3 flex w-full justify-between text-gray-600 items-center">
       <div className="flex gap-10 items-center">
         <div className="flex gap-2 items-center">
           <span>Show</span>
@@ -128,7 +128,7 @@ export default function List() {
             <StatCard key={card.title} title={card.title} value={card.value} />
           ))}
         </div>
-        <div className="w-full flex *:w-full *:bg-white *:rounded gap-2 *:p-5 *:border">
+        <div className="*:min-w-35 overflow-auto w-full flex *:w-full *:bg-white *:rounded gap-2 *:border">
           {voiceStats.map((card) => (
             <StatCard key={card.title} title={card.title} value={card.value} />
           ))}
@@ -136,7 +136,7 @@ export default function List() {
       </div>
 
       <div className="relative">
-        <button className="bg-gray-100 border border-gray-200 rounded p-1.5 absolute right-2 -top-1 xl:top-0 z-2 cursor-pointer hover:bg-gray-200 flex gap-1 text-gray-800"
+        <button className="bg-gray-50 border border-gray-200 rounded p-1.5 sm:px-2 absolute right-2 -top-1 xl:top-0 z-2 cursor-pointer hover:bg-gray-100 flex gap-1 text-gray-800"
           onClick={() => {
             setMainRise(!mainRise)
           }}
@@ -155,7 +155,9 @@ export default function List() {
           <div className="p-3 flex flex-col w-full h-full gap-3 overflow-auto">
             <div className="flex gap-2">
               <SearchComponent />
-              <VoicePickerComponent />
+              <div className="flex h-full not-md:min-w-29">
+                <VoicePickerComponent />
+              </div>
             </div>
             <MembersListComponent />
             <PaginationControls currentPage={1} itemsPerPage={20} totalItems={120} />
