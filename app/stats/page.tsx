@@ -1,8 +1,8 @@
 "use client";
 
 import MembersListComponent from "../components/attendance/attendanceMembersListComponent";
-import AttendanceSearchComponent from "../components/attendance/attendanceSearchComponent";
-import VoicePickerComponent from "../components/attendance/attendanceVoiceFilterComponent";
+import StatsSearchComponent from "../components/stats/statsSearchComponent";
+
 import {
   CaretDoubleUpIcon,
   CaretDoubleDownIcon,
@@ -153,12 +153,7 @@ export default function List() {
       <div className="relative h-full flex flex-col overflow-auto">
         <div className="h-full flex flex-col border rounded-md border-gray-100 relative overflow-auto">
           <div className="p-3 flex flex-col w-full h-full gap-3 overflow-auto">
-            <div className="flex gap-2">
-              <AttendanceSearchComponent />
-              <div className="flex h-full not-md:min-w-29">
-                <VoicePickerComponent />
-              </div>
-            </div>
+            <StatsSearchComponent />
             <MembersListComponent />
             <PaginationControls currentPage={1} itemsPerPage={20} totalItems={120} />
           </div>
