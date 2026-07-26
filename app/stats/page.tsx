@@ -2,6 +2,7 @@
 
 import MembersListComponent from "../components/attendance/attendanceMembersListComponent";
 import StatsSearchComponent from "../components/stats/statsSearchComponent";
+import StatsVoiceFilter from "../components/stats/statsVoiceFilter";
 
 import {
   CaretDoubleUpIcon,
@@ -35,13 +36,14 @@ const summaryCards = [
   { title: "Session days number", value: "36" },
 ];
 
-// const voiceStats = [
-//   { title: "1, Soprano", value: "45%" },
-//   { title: "2, Alto", value: "20%" },
-//   { title: "3, Tenor", value: "80%" },
-//   { title: "4, Bass", value: "95%" },
-//   { title: "5, Musicians", value: "95%" },
-// ];
+const voiceStats = [
+  { voiceNumber: 0, value: 45 },
+  { voiceNumber: 1, value: 90 },
+  { voiceNumber: 2, value: 65 },
+  { voiceNumber: 3, value: 62.2 },
+  { voiceNumber: 4, value: 10 },
+  { voiceNumber: 5, value: 100 },
+];
 
 function StatCard({ title, value }: StatCardProps) {
   return (
@@ -153,6 +155,7 @@ export default function List() {
       <div className="relative h-full flex flex-col overflow-auto">
         <div className="h-full flex flex-col border rounded-md border-gray-100 relative overflow-auto">
           <div className="p-3 flex flex-col w-full h-full gap-3 overflow-auto">
+            <StatsVoiceFilter props={voiceStats}/>
             <StatsSearchComponent />
             <MembersListComponent />
             <PaginationControls currentPage={1} itemsPerPage={20} totalItems={120} />

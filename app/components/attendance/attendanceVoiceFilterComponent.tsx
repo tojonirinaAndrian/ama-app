@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CaretDownIcon } from "@phosphor-icons/react"
 import { useAttendanceStore } from "@/app/stores/attendance-store";
