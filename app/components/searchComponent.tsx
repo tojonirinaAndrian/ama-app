@@ -2,14 +2,19 @@
 import { MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
 import { useEffect, useState, useRef } from "react";
 
-export default function SearchComponent({ props }: { props: { searchInput: string, setSearchInput: (value: string) => void } }) {
+export default function SearchComponent({ props }: {
+    props: {
+        searchInput: string,
+        setSearchInput: (value: string) => void
+    }
+}) {
     const [isInputting, setIsInputting] = useState<boolean>(false);
     // const [searchInput, setSearchInput] = useState<string>("");
     const searchInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         const searchElement: HTMLInputElement = document.getElementById("searchInput") as HTMLInputElement;
-        
+
         searchElement?.addEventListener("focusin", () => {
             setIsInputting(true)
         });
@@ -32,7 +37,7 @@ export default function SearchComponent({ props }: { props: { searchInput: strin
             window.removeEventListener("keydown", handleKeyDown);
         };
     }, []);
-        
+
     const onCancelClick = () => {
         const searchElement: HTMLInputElement = document.getElementById("searchInput") as HTMLInputElement;
         searchElement.value = "";
