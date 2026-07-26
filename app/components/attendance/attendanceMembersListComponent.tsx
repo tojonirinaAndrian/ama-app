@@ -77,7 +77,7 @@ function MemberComponentSkeleton() {
         <div className={`cursor-pointer w-full border-2 rounded p-3 flex gap-2 items-center`}
         >
             <Skeleton
-                className="w-14 h-14 rounded-full"
+                className="w-10 h-10 md:w-12 md:h-12 rounded-full"
             />
             <div className="flex flex-col w-full gap-2">
                 <Skeleton className="w-[50%] h-4" />
@@ -113,7 +113,7 @@ function MemberComponent({ member }: { member: MemberType }) {
                     alt={member.name}
                     width={100}
                     height={100}
-                    className="w-14 h-14 rounded-full object-cover"
+                    className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
                 />
                 <div className="flex flex-col">
                     <p className="font-semibold">{member.name}</p>

@@ -14,11 +14,6 @@ import {
 } from "@phosphor-icons/react";
 import { useState } from "react";
 
-type StatCardProps = {
-  title: string;
-  value: string;
-};
-
 type PaginationControlsProps = {
   currentPage: number;
   itemsPerPage: number;
@@ -31,28 +26,13 @@ const pageConfig = {
   dateRange: "01 Jan - 01 April",
 };
 
-const summaryCards = [
-  { title: "General attendance rate", value: "90%" },
-  { title: "Session days number", value: "36" },
-];
-
 const voiceStats = [
-  { voiceNumber: 0, value: 45 },
-  { voiceNumber: 1, value: 90 },
-  { voiceNumber: 2, value: 65 },
-  { voiceNumber: 3, value: 62.2 },
-  { voiceNumber: 4, value: 10 },
-  { voiceNumber: 5, value: 100 },
+  { voiceNumber: 1, value: 90, voiceAppellation: "soprano" },
+  { voiceNumber: 2, value: 65, voiceAppellation: "alto" },
+  { voiceNumber: 3, value: 59, voiceAppellation: "tenor" },
+  { voiceNumber: 4, value: 10, voiceAppellation: "bass" },
+  { voiceNumber: 5, value: 100, voiceAppellation: "musician" },
 ];
-
-function StatCard({ title, value }: StatCardProps) {
-  return (
-    <div className="w-full rounded border bg-white p-3 md:p-5 space-y-2 md:space-y-5">
-      <p className="text-gray-600">{title}</p>
-      <p className="text-3xl md:text-5xl font-semibold">{value}</p>
-    </div>
-  );
-}
 
 function PaginationControls({
   currentPage,
@@ -109,14 +89,11 @@ export default function List() {
 
   return (
     <div className="flex flex-col h-full gap-3 xl:gap-5">
-      <div className="flex justify-between items-start w-full">
-        <div className={`flex flex-col xl:gap-2 ${mainRise && "hidden"}`}>
-          <h2 className="font-semibold xl:text-5xl text-2xl block py-2">
+      <div className="flex justify-between items-center w-full">
+        <div className={`${mainRise && "hidden"}`}>
+          <h2 className="font-semibold xl:text-4xl text-2xl">
             Stats
           </h2>
-          <p className="text-gray-500">
-            {`Check the choir's statistics here.`}
-          </p>
         </div>
         <button className="p-2.5 px-4 cursor-pointer border-gray-500 rounded border flex gap-2 items-center ml-auto">
           <CalendarIcon size={18} />
@@ -125,10 +102,28 @@ export default function List() {
       </div>
 
       <div className={`space-y-2 bg-gray-50/20 border rounded p-2 ${mainRise ? "hidden" : ""}`}>
-        <div className="w-full flex gap-2">
-          {summaryCards.map((card) => (
-            <StatCard key={card.title} title={card.title} value={card.value} />
-          ))}
+        <div className="w-full flex gap-2 flex-col">
+          <div className="w-full rounded border bg-white p-3 md:p-5 space-y-2 md:space-y-5">
+            <p className="text-gray-600">{"Overall rate"}</p>
+            <p className="text-3xl md:text-5xl font-semibold">{90}%</p>
+          </div>
+          <div className="flex gap-2 not-md:flex-col">
+            <div className="bg-white border w-full flex flex-col gap-1 *:p-2 *:px-3 rounded text-gray-500 *:last:border-b-0 *:border-b">
+              {voiceStats.map((stat) => {
+                return <div key={stat.voiceNumber} className="flex justify-between items-center">
+                  <p className="capitalize">{stat.voiceAppellation}</p>
+                  <p className={`p-1 px-2 rounded ${stat.value >= 60 && "bg-green-100 text-green-700"}
+                    ${(stat.value < 60 && stat.value >= 30) && "bg-yellow-100 text-yellow-700"}
+                    ${(stat.value < 30) && "bg-red-100 text-red-700"}
+                    `}>{stat.value}%</p>
+                </div>
+              })}
+            </div>
+            <div className="w-full rounded border bg-white p-3 md:p-5 space-y-2 md:space-y-5">
+              <p className="text-gray-600">{"Session days"}</p>
+              <p className="text-3xl md:text-5xl font-semibold">{25} days</p>
+            </div>
+          </div>
         </div>
         {/* <div className="*:min-w-35 overflow-auto w-full flex *:w-full *:bg-white *:rounded gap-2 *:border">
           {voiceStats.map((card) => (
@@ -138,7 +133,7 @@ export default function List() {
       </div>
 
       <div className="relative">
-        <button className="bg-gray-50 border border-gray-200 rounded p-1.5 sm:px-2 absolute right-2 -top-1 xl:top-0 z-2 cursor-pointer hover:bg-gray-100 flex gap-1 text-gray-800"
+        <button className="bg-gray-50 border border-gray-200 rounded p-1.5 sm:px-2 absolute right-2 -top-2 xl:-top-1 z-2 cursor-pointer hover:bg-gray-100 flex gap-1 text-gray-800"
           onClick={() => {
             setMainRise(!mainRise)
           }}
@@ -155,8 +150,10 @@ export default function List() {
       <div className="relative h-full flex flex-col overflow-auto">
         <div className="h-full flex flex-col border rounded-md border-gray-100 relative overflow-auto">
           <div className="p-3 flex flex-col w-full h-full gap-3 overflow-auto">
-            <StatsVoiceFilter props={voiceStats}/>
-            <StatsSearchComponent />
+            <div className="flex gap-2 md:justify-between">
+              <StatsSearchComponent />
+              <StatsVoiceFilter />
+            </div>
             <MembersListComponent />
             <PaginationControls currentPage={1} itemsPerPage={20} totalItems={120} />
           </div>

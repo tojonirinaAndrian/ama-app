@@ -1,6 +1,7 @@
 'use client';
 import { useState } from "react";
 import { useStatsStore } from "@/app/stores/stats-store";
+import { SlidersIcon } from "@phosphor-icons/react";
 
 type VoiceType = {
     voiceNumber: number,
@@ -32,29 +33,11 @@ type voiceStatsType = {
     value: number 
 }[];
 
-export default function StatsVoiceFilter({ props }: { props: voiceStatsType }) {
-    const { voiceNumber, setVoiceNumber } = useStatsStore();
-    const [chosenVoice, setChosenVoice] = useState<VoiceType>(voices[voiceNumber]);
-
+export default function StatsVoiceFilter() {
+    const [filterOpen, setFilterOpen] = useState<boolean>(false);
     return <>
-        <div className="inline-block space-x-1 space-y-1">
-            {voices.map((voice) => (
-                <button
-                    key={voice.voiceNumber}
-                    className={`cursor-pointer border rounded pr-2 p-2 px-3 ${voice.voiceNumber === chosenVoice.voiceNumber
-                        ? "bg-blue-100 text-blue-800 border-blue-200"
-                        : "text-gray-500 hover:bg-blue-50 hover:text-blue-800 border-blue-50"
-                        }`}
-                    onClick={() => {
-                        setChosenVoice(voice);
-                        setVoiceNumber(voice.voiceNumber)
-                    }}
-                >
-                    {voice.voiceAppellation} - <span className="bg-gray-50 p-1 rounded-md">
-                        {props[voice.voiceNumber].value}%
-                    </span>
-                </button>
-            ))}
-        </div>
+        <button className="flex cursor-pointer items-center gap-2 p-2.5 px-4 border border-gray-200 rounded">
+            <SlidersIcon size={18}/> Filters
+        </button>
     </>
 }

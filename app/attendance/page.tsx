@@ -21,16 +21,13 @@ export default function Attendance() {
 
   return (
     <div className="flex flex-col h-full gap-3 xl:gap-5">
-      <div className={`flex flex-col xl:gap-2 ${mainRise && "hidden"}`}>
-        <h2 className="font-semibold xl:text-5xl text-2xl block py-2">
+      <div className={`xl:gap-2 ${mainRise && "hidden"}`}>
+        <h2 className="font-semibold xl:text-4xl text-2xl">
           Attendance
         </h2>
-        <p className="text-gray-500">
-          {`Confirm or verify choir members' attendance here.`}
-        </p>
       </div>
       <div className="relative">
-        <button className="bg-gray-50 border border-gray-200 rounded p-1.5 sm:px-2 absolute right-2 -top-1 xl:top-0 z-2 cursor-pointer hover:bg-gray-100 flex gap-1 text-gray-800"
+        <button className="bg-gray-50 border border-gray-200 rounded p-1.5 sm:px-2 absolute right-2 -top-2 xl:-top-1 z-2 cursor-pointer hover:bg-gray-100 flex gap-1 text-gray-800"
           onClick={() => {
             setMainRise(!mainRise)
           }}

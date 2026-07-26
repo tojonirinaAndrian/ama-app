@@ -47,7 +47,7 @@ export default function SearchComponent({ props }: {
 
     return <>
         <div
-            className={`w-full xl:w-[45%] md:w-[60%] relative border flex gap-1 p-1 items-center rounded border-gray-200 bg-gray-50/20 ${isInputting && "outline outline-gray-500 bg-white"}`}>
+            className={`not-md:flex-1 xl:w-[45%] md:w-[60%] relative border flex gap-1 p-1 items-center rounded border-gray-200 bg-gray-50/20 ${isInputting && "outline outline-gray-500 bg-white"}`}>
 
             <div className="p-1.5 pr-1 cursor-text"
                 onClick={() => {
