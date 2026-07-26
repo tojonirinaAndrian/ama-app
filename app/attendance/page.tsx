@@ -46,7 +46,7 @@ export default function Attendance() {
       <div className="relative h-full flex flex-col overflow-auto">
 
         <div className="h-full flex flex-col border rounded-md border-gray-100 relative overflow-auto">
-          <div className="*:hover:cursor-pointer w-full flex *:w-full *:md:p-5 *:p-4 *:border-b-2 *:border-transparent font-semibold text-gray-400">
+          <div className="*:hover:cursor-pointer w-full flex *:w-full *:md:p-5 *:p-4 *:border-b-2 *:border-transparent text-gray-400">
             <button
               onClick={() => setActiveSection("mark")}
               className={`${activeSection === "mark" ? ACTIVE_STYLE : ""}`}

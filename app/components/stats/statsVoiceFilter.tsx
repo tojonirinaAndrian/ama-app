@@ -37,7 +37,7 @@ export default function StatsVoiceFilter({ props }: { props: voiceStatsType }) {
     const [chosenVoice, setChosenVoice] = useState<VoiceType>(voices[voiceNumber]);
 
     return <>
-        <div className="inline-block space-x-2 space-y-2">
+        <div className="inline-block space-x-1 space-y-1">
             {voices.map((voice) => (
                 <button
                     key={voice.voiceNumber}
