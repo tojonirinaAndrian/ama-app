@@ -5,7 +5,7 @@ import { useAttendanceStore } from "../stores/attendance-store";
 import DatePickerSection from "../components/attendance/datePickerSectionComponent";
 import MembersListComponent from "../components/attendance/attendanceMembersListComponent";
 import SearchComponent from "../components/attendance/attendanceSearchComponent";
-import VoicePickerComponent from "../components/attendance/voiceFilterComponent";
+import VoicePickerComponent from "../components/attendance/attendanceVoiceFilterComponent";
 import { CaretDoubleUpIcon, CaretDoubleDownIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import AttendedFilterComponent from "../components/attendance/attendedFilterComponent";

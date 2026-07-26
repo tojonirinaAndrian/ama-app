@@ -2,7 +2,7 @@
 
 import MembersListComponent from "../components/attendance/attendanceMembersListComponent";
 import AttendanceSearchComponent from "../components/attendance/attendanceSearchComponent";
-import VoicePickerComponent from "../components/attendance/voiceFilterComponent";
+import VoicePickerComponent from "../components/attendance/attendanceVoiceFilterComponent";
 import {
   CaretDoubleUpIcon,
   CaretDoubleDownIcon,
@@ -35,13 +35,13 @@ const summaryCards = [
   { title: "Session days number", value: "36" },
 ];
 
-const voiceStats = [
-  { title: "1, Soprano", value: "45%" },
-  { title: "2, Alto", value: "20%" },
-  { title: "3, Tenor", value: "80%" },
-  { title: "4, Bass", value: "95%" },
-  { title: "5, Musicians", value: "95%" },
-];
+// const voiceStats = [
+//   { title: "1, Soprano", value: "45%" },
+//   { title: "2, Alto", value: "20%" },
+//   { title: "3, Tenor", value: "80%" },
+//   { title: "4, Bass", value: "95%" },
+//   { title: "5, Musicians", value: "95%" },
+// ];
 
 function StatCard({ title, value }: StatCardProps) {
   return (
