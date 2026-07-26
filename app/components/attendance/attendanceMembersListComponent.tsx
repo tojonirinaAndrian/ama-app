@@ -72,6 +72,21 @@ async function getMembers({
     };
 }
 
+function MemberComponentSkeleton() {
+    return <>
+        <div className={`cursor-pointer w-full border-2 rounded p-3 flex gap-2 items-center`}
+        >
+            <Skeleton
+                className="w-14 h-14 rounded-full"
+            />
+            <div className="flex flex-col w-full gap-2">
+                <Skeleton className="w-[50%] h-4" />
+                <Skeleton className="w-[20%] h-4" />
+            </div>
+        </div>
+    </>
+};
+
 function MemberComponent({ member }: { member: MemberType }) {
     const [present, setPresent] = useState<boolean>(false);
     const { activeSection } = useAttendanceStore();
@@ -197,19 +212,4 @@ export default function AttendanceMembersListComponent() {
             </>}
         </div>
     );
-}
-
-function MemberComponentSkeleton() {
-    return <>
-        <div className={`cursor-pointer w-full border-2 rounded p-3 flex gap-2 items-center`}
-        >
-            <Skeleton
-                className="w-14 h-14 rounded-full"
-            />
-            <div className="flex flex-col w-full gap-2">
-                <Skeleton className="w-[50%] h-4" />
-                <Skeleton className="w-[20%] h-4" />
-            </div>
-        </div>
-    </>
 }

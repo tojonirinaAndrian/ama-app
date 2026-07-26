@@ -1,5 +1,5 @@
 'use client';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CaretDownIcon } from "@phosphor-icons/react"
 import { useAttendanceStore } from "@/app/stores/attendance-store";
@@ -26,12 +26,12 @@ const voices: VoiceType[] = [{
 }, {
     voiceNumber: 5,
     voiceAppellation: "Musician"
-}]
+}];
 
 export default function VoicePickerComponent() {
-    const [chosenVoice, setChosenVoice] = useState<VoiceType>(voices[0]);
+    const { voiceNumber, setVoiceNumber } = useAttendanceStore();
+    const [chosenVoice, setChosenVoice] = useState<VoiceType>(voices[voiceNumber]);
     const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
-    const { setVoiceNumber } = useAttendanceStore();
 
     return <>
         <Popover
