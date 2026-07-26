@@ -1,13 +1,11 @@
 'use client';
-import { useAttendanceStore } from "@/app/stores/attendance-store";
-import { MagnifyingGlassIcon, BackspaceIcon, XIcon } from "@phosphor-icons/react";
+import { MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
 import { useEffect, useState, useRef } from "react";
 
-export default function SearchComponent() {
+export default function SearchComponent({ props }: { props: { searchInput: string, setSearchInput: (value: string) => void } }) {
     const [isInputting, setIsInputting] = useState<boolean>(false);
     // const [searchInput, setSearchInput] = useState<string>("");
     const searchInputRef = useRef<HTMLInputElement>(null);
-    const { searchInput, setSearchInput } = useAttendanceStore();
 
     useEffect(() => {
         const searchElement: HTMLInputElement = document.getElementById("searchInput") as HTMLInputElement;
@@ -39,7 +37,7 @@ export default function SearchComponent() {
         const searchElement: HTMLInputElement = document.getElementById("searchInput") as HTMLInputElement;
         searchElement.value = "";
         searchElement.focus();
-        setSearchInput("");
+        props.setSearchInput("");
     };
 
     return <>
@@ -58,11 +56,11 @@ export default function SearchComponent() {
                 ref={searchInputRef}
                 placeholder="Search a member..."
                 onChange={(e) => {
-                    setSearchInput(e.target.value)
+                    props.setSearchInput(e.target.value)
                 }}
-                defaultValue={searchInput}
+                defaultValue={props.searchInput}
             />
-            {(searchInput.length >= 1) ? <button
+            {(props.searchInput.length >= 1) ? <button
                 onClick={onCancelClick}
                 className="cursor-pointer w-fit flex gap-2 px-3 items-center bg-white border rounded p-2 border-gray-100">
                 <XIcon size={18} />

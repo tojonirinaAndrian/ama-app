@@ -1,7 +1,7 @@
 "use client";
 
 import MembersListComponent from "../components/attendance/attendanceMembersListComponent";
-import SearchComponent from "../components/attendance/searchComponent";
+import AttendanceSearchComponent from "../components/attendance/attendanceSearchComponent";
 import VoicePickerComponent from "../components/attendance/voiceFilterComponent";
 import {
   CaretDoubleUpIcon,
@@ -128,11 +128,11 @@ export default function List() {
             <StatCard key={card.title} title={card.title} value={card.value} />
           ))}
         </div>
-        <div className="*:min-w-35 overflow-auto w-full flex *:w-full *:bg-white *:rounded gap-2 *:border">
+        {/* <div className="*:min-w-35 overflow-auto w-full flex *:w-full *:bg-white *:rounded gap-2 *:border">
           {voiceStats.map((card) => (
             <StatCard key={card.title} title={card.title} value={card.value} />
           ))}
-        </div>
+        </div> */}
       </div>
 
       <div className="relative">
@@ -154,7 +154,7 @@ export default function List() {
         <div className="h-full flex flex-col border rounded-md border-gray-100 relative overflow-auto">
           <div className="p-3 flex flex-col w-full h-full gap-3 overflow-auto">
             <div className="flex gap-2">
-              <SearchComponent />
+              <AttendanceSearchComponent />
               <div className="flex h-full not-md:min-w-29">
                 <VoicePickerComponent />
               </div>

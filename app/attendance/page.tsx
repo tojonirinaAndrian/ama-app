@@ -4,7 +4,7 @@ import { useAttendanceStore } from "../stores/attendance-store";
 // import { Button } from "@/components/ui/button";
 import DatePickerSection from "../components/attendance/datePickerSectionComponent";
 import MembersListComponent from "../components/attendance/attendanceMembersListComponent";
-import SearchComponent from "../components/attendance/searchComponent";
+import SearchComponent from "../components/attendance/attendanceSearchComponent";
 import VoicePickerComponent from "../components/attendance/voiceFilterComponent";
 import { CaretDoubleUpIcon, CaretDoubleDownIcon } from "@phosphor-icons/react";
 import { useState } from "react";
