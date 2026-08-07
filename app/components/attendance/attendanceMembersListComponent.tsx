@@ -80,7 +80,7 @@ async function getMembers({
 
 function MemberComponentSkeleton() {
     return <>
-        <div className={`cursor-pointer w-full border-2 rounded p-3 flex gap-2 items-center`}
+        <div className={`cursor-pointer w-full border rounded p-3 flex gap-2 items-center`}
         >
             <Skeleton
                 className="w-10 h-10 md:w-12 md:h-12 rounded-full"
@@ -135,7 +135,7 @@ function MemberComponent({ member }: { member: MemberType }) {
 }
 
 export default function AttendanceMembersListComponent() {
-    const { searchInput, voiceNumber } = useAttendanceStore();
+    const { searchInput, voiceNumber, hasHydrated } = useAttendanceStore();
     const [debouncedSearch] = useDebounce(searchInput, 500);
     console.log("voiceNumber in AttendanceMembersListComponent:", voiceNumber); // Debugging log
     // 2. Create a reference to the scrollable container
@@ -162,6 +162,7 @@ export default function AttendanceMembersListComponent() {
             return nextSkip < lastPage.total ? nextSkip : undefined;
         },
         staleTime: 1000 * 60 * 5,
+        enabled: hasHydrated, // Only enable the query after hydration
     });
 
     // 3. Reset scroll to top whenever the search query changes
@@ -173,7 +174,7 @@ export default function AttendanceMembersListComponent() {
 
     const members = data?.pages.flatMap((page) => page.members) ?? [];
 
-    if (isLoading) {
+    if (isLoading || !hasHydrated) {
         return <div
             className="h-full bg-gray-50/20 border rounded overflow-hidden flex flex-col gap-2 p-2.5 md:p-3"
         >
