@@ -59,6 +59,8 @@ async function getMembers({
 
     const data = await response.json();
 
+    console.log('Fetched members data:', data); // Debugging log
+    
     return {
         members: data.users.map((user: DummyUser, index: number) => ({
             id: user.id,
