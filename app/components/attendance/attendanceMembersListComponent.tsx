@@ -114,7 +114,7 @@ function MemberComponent({ member }: { member: MemberType }) {
                     className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
                 />
                 <div className="flex flex-col">
-                    <p className="font-semibold">{member.name} {member.second_name}</p>
+                    <p className="font-semibold flex items-center gap-2">{member.name} {member.second_name} <span className="text-gray-500">({member.call_name})</span></p>
                     <p className="text-gray-500 capitalize text-sm">
                         <span>
                             {member.role}
