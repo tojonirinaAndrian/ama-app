@@ -1,29 +1,87 @@
-import users from "@/data/users.json";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { pool } from "@/lib/db";
+
+// Voice number mapping to your DB enum values
+const VOICE_MAP: Record<number, string> = {
+  1: "soprano",
+  2: "alto",
+  3: "tenor",
+  4: "bass",
+  5: "musician",
+};
 
 export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
+  try {
+    const searchParams = request.nextUrl.searchParams;
 
-  const limit = Number(searchParams.get("limit")) || 20;
-  const skip = Number(searchParams.get("skip")) || 0;
-  const search = String(searchParams.get("search")?.toLowerCase().trim()) || "";
-  const voiceNumber = Number(searchParams.get("voiceNumber")) || 0;
+    const limit = Math.max(1, Number(searchParams.get("limit")) || 20);
+    const skip = Math.max(0, Number(searchParams.get("skip")) || 0);
+    const search = searchParams.get("search")?.trim() || "";
+    const voiceNumber = Number(searchParams.get("voiceNumber")) || 0;
 
+    // Build dynamic SQL constraints
+    const conditions: string[] = ["is_active = true"];
+    const values: (string | number)[] = [];
 
-  const searchResults = users.users.filter((user) => {
+    // 1. Voice / Role Filter
+    if (voiceNumber in VOICE_MAP) {
+      values.push(VOICE_MAP[voiceNumber]);
+      conditions.push(`$${values.length} = ANY(roles)`);
+    }
 
-    // TODO: Add voice search logic here
+    // 2. Search Filter (matches name, second_name, or call_name)
+    if (search) {
+      values.push(`%${search}%`);
+      const searchIdx = values.length;
+      conditions.push(
+        `(name ILIKE $${searchIdx} OR second_name ILIKE $${searchIdx} OR call_name ILIKE $${searchIdx})`
+      );
+    }
 
-    const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
-    return fullName.includes(search);
-  });
+    const whereClause = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
 
-  const paginatedUsers = searchResults.slice(skip, skip + limit);
+    // Query 1: Fetch paginated members
+    values.push(limit, skip);
+    const dataQuery = `
+      SELECT 
+        id, 
+        name, 
+        second_name, 
+        call_name, 
+        robe_pastorale, 
+        roles, 
+        gender, 
+        phone_number, 
+        whatsapp_number, 
+        facebook_link, 
+        birthday 
+      FROM members
+      ${whereClause}
+      ORDER BY name ASC, second_name ASC
+      LIMIT $${values.length - 1} OFFSET $${values.length};
+    `;
 
-  return Response.json({
-    users: paginatedUsers,
-    total: users.users.length,
-    skip,
-    limit,
-  });
+    // Query 2: Get total filtered count for pagination metadata
+    const countValues = values.slice(0, values.length - 2);
+    const countQuery = `SELECT COUNT(*)::int AS total FROM members ${whereClause};`;
+
+    const [membersResult, countResult] = await Promise.all([
+      pool.query(dataQuery, values),
+      pool.query(countQuery, countValues),
+    ]);
+
+    const total = countResult.rows[0]?.total || 0;
+
+    return NextResponse.json(
+      {
+        users: membersResult.rows,
+        total,
+        skip,
+        limit,
+      },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 }
