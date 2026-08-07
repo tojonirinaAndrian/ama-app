@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { pool } from "@/lib/db";
 
-// Map voice query IDs to choir role enums
+// Voice number mapping to your DB enum values
 const VOICE_MAP: Record<number, string> = {
   1: "soprano",
   2: "alto",
@@ -12,42 +12,36 @@ const VOICE_MAP: Record<number, string> = {
 
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = request.nextUrl;
+    const searchParams = request.nextUrl.searchParams;
 
-    // 1. Sanitize query parameters
-    const limit = Math.min(Math.max(1, Number(searchParams.get("limit")) || 20), 100);
+    const limit = Math.max(1, Number(searchParams.get("limit")) || 20);
     const skip = Math.max(0, Number(searchParams.get("skip")) || 0);
     const search = searchParams.get("search")?.trim() || "";
     const voiceNumber = Number(searchParams.get("voiceNumber")) || 0;
 
-    // 2. Construct dynamic WHERE clauses
-    const filterConditions: string[] = ["is_active = true"];
-    const filterValues: (string | number)[] = [];
+    // Build dynamic SQL constraints
+    const conditions: string[] = ["is_active = true"];
+    const values: (string | number)[] = [];
 
-    // Role filter
-    if (voiceNumber in VOICE_MAP && voiceNumber !== 0) {
-      filterValues.push(VOICE_MAP[voiceNumber]);
-      filterConditions.push(`$${filterValues.length} = ANY(roles)`);
+    // 1. Voice / Role Filter
+    if ((voiceNumber in VOICE_MAP) && voiceNumber !== 0) {
+      values.push(VOICE_MAP[voiceNumber]);
+      conditions.push(`$${values.length} = role`);
     }
 
-    // Search filter (name, second_name, call_name)
+    // 2. Search Filter (matches name, second_name, or call_name)
     if (search) {
-      filterValues.push(`%${search}%`);
-      const paramIdx = filterValues.length;
-      filterConditions.push(
-        `(name ILIKE $${paramIdx} OR second_name ILIKE $${paramIdx} OR call_name ILIKE $${paramIdx})`
+      values.push(`%${search}%`);
+      const searchIdx = values.length;
+      conditions.push(
+        `(name ILIKE $${searchIdx} OR second_name ILIKE $${searchIdx} OR call_name ILIKE $${searchIdx})`
       );
     }
 
-    const whereClause = filterConditions.length
-      ? `WHERE ${filterConditions.join(" AND ")}`
-      : "";
+    const whereClause = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
 
-    // 3. Prepare parameters for paginated queries
-    const paginationValues = [...filterValues, limit, skip];
-    const limitParamIdx = paginationValues.length - 1;
-    const offsetParamIdx = paginationValues.length;
-
+    // Query 1: Fetch paginated members
+    values.push(limit, skip);
     const dataQuery = `
       SELECT 
         id, 
@@ -55,7 +49,7 @@ export async function GET(request: NextRequest) {
         second_name, 
         call_name, 
         robe_pastorale, 
-        roles, 
+        role, 
         gender, 
         phone_number, 
         whatsapp_number, 
@@ -65,29 +59,33 @@ export async function GET(request: NextRequest) {
       FROM members
       ${whereClause}
       ORDER BY name ASC, second_name ASC
-      LIMIT $${limitParamIdx} OFFSET $${offsetParamIdx};
+      LIMIT $${values.length - 1} OFFSET $${values.length};
     `;
 
+    // Query 2: Get total filtered count for pagination metadata
+    const countValues = values.slice(0, values.length - 2);
     const countQuery = `SELECT COUNT(*)::int AS total FROM members ${whereClause};`;
 
-    // 4. Execute queries concurrently
     const [membersResult, countResult] = await Promise.all([
-      pool.query(dataQuery, paginationValues),
-      pool.query(countQuery, filterValues),
+      pool.query(dataQuery, values),
+      pool.query(countQuery, countValues),
     ]);
 
-    return NextResponse.json({
-      members: membersResult.rows,
-      total: countResult.rows[0]?.total ?? 0,
-      skip,
-      limit,
-    });
-  } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
-    console.error("Database error in GET /api/members:", error);
+    const total = countResult.rows[0]?.total || 0;
 
     return NextResponse.json(
-      { error: errorMessage },
+      {
+        members: membersResult.rows,
+        total,
+        skip,
+        limit,
+      },
+      { status: 200 }
+    );
+  } catch (error: unknown) {
+    console.error("Database error in /api/members:", error); // <--- ADD THIS
+    return NextResponse.json(
+      { error: (error as Error).message || "Internal Server Error" },
       { status: 500 }
     );
   }
