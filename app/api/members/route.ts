@@ -24,9 +24,9 @@ export async function GET(request: NextRequest) {
     const values: (string | number)[] = [];
 
     // 1. Voice / Role Filter
-    if (voiceNumber in VOICE_MAP) {
+    if ((voiceNumber in VOICE_MAP) && voiceNumber !== 0) {
       values.push(VOICE_MAP[voiceNumber]);
-      conditions.push(`$${values.length} = ANY(roles)`);
+      conditions.push(`$${values.length} = role`);
     }
 
     // 2. Search Filter (matches name, second_name, or call_name)
@@ -49,12 +49,13 @@ export async function GET(request: NextRequest) {
         second_name, 
         call_name, 
         robe_pastorale, 
-        roles, 
+        role, 
         gender, 
         phone_number, 
         whatsapp_number, 
         facebook_link, 
-        birthday 
+        birthday,
+        image_url
       FROM members
       ${whereClause}
       ORDER BY name ASC, second_name ASC
@@ -74,7 +75,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(
       {
-        users: membersResult.rows,
+        members: membersResult.rows,
         total,
         skip,
         limit,
@@ -82,7 +83,7 @@ export async function GET(request: NextRequest) {
       { status: 200 }
     );
   } catch (error: any) {
-    console.error("Database error in /api/users:", error); // <--- ADD THIS
+    console.error("Database error in /api/members:", error); // <--- ADD THIS
     return NextResponse.json(
       { error: error.message || "Internal Server Error" },
       { status: 500 }

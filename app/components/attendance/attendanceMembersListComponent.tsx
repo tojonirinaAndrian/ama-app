@@ -9,19 +9,18 @@ import { ArrowCounterClockwiseIcon } from "@phosphor-icons/react"
 import { Skeleton } from '@/components/ui/skeleton';
 
 type MemberType = {
-    id: number;
+    id: string;
     name: string;
-    voiceNumber: number;
-    voiceAppellation: string;
-    image: string;
-};
-
-type DummyUser = {
-    id: number;
-    firstName: string;
-    lastName: string;
-    username: string;
-    image: string;
+    second_name: string;
+    call_name: string;
+    robe_pastorale: string;
+    role: string;
+    gender: string;
+    phone_number: string;
+    whatsapp_number: string;
+    facebook_link: string;
+    birthday: string;
+    image_url: string;
 };
 
 const voiceTypes = [
@@ -50,7 +49,7 @@ async function getMembers({
 }): Promise<MembersResponse> {
 
     const response = await fetch(
-        `/api/users?limit=20&skip=${pageParam}&search=${encodeURIComponent(search)}&voiceNumber=${voiceNumber}`
+        `/api/members?limit=20&skip=${pageParam}&search=${encodeURIComponent(search)}&voiceNumber=${voiceNumber}`
     );
 
     if (!response.ok) {
@@ -60,13 +59,18 @@ async function getMembers({
     const data = await response.json();
 
     console.log('Fetched members data:', data); // Debugging log
-    
+
     return {
-        members: data.users.map((user: DummyUser, index: number) => ({
+        members: data.members.map((user: MemberType) => ({
             id: user.id,
-            name: `${user.firstName} ${user.lastName}`,
-            image: user.image,
-            ...voiceTypes[index % voiceTypes.length],
+            name: user.name,
+            second_name: user.second_name,
+            call_name: user.call_name,
+            robe_pastorale: user.robe_pastorale,
+            role: user.role,
+            facebook_link: user.facebook_link,
+            birthday: user.birthday,
+            image_url: user.image_url,
         })),
         total: data.total,
         skip: data.skip,
@@ -111,16 +115,18 @@ function MemberComponent({ member }: { member: MemberType }) {
                 onClick={onComponentClick}
             >
                 <Image
-                    src={member.image}
+                    src={member.image_url}
                     alt={member.name}
                     width={100}
                     height={100}
                     className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
                 />
                 <div className="flex flex-col">
-                    <p className="font-semibold">{member.name}</p>
+                    <p className="font-semibold">{member.name} {member.second_name}</p>
                     <p className="text-gray-500 capitalize text-sm">
-                        {member.voiceNumber}, {member.voiceAppellation}
+                        <span>
+                            {member.role}
+                        </span>
                     </p>
                 </div>
             </div>
