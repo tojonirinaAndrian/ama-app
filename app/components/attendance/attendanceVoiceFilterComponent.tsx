@@ -33,7 +33,7 @@ export default function VoicePickerComponent() {
     const { voiceNumber, setVoiceNumber, hasHydrated } = useAttendanceStore();
     const [chosenVoice, setChosenVoice] = useState<VoiceType>(voices[voiceNumber]);
     const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
-
+    console.log("voiceNumber in VoicePickerComponent:", voiceNumber); // Debugging log
     return <>
         {!hasHydrated && <div className="w-fit p-2.5 justify-center text-gray-200 cursor-pointer h-full px-4 border-gray-200 border rounded flex items-center gap-1">
             <Skeleton className="w-10 h-4 rounded bg-gray-200" />

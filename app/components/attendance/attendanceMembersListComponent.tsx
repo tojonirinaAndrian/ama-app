@@ -137,7 +137,7 @@ function MemberComponent({ member }: { member: MemberType }) {
 export default function AttendanceMembersListComponent() {
     const { searchInput, voiceNumber } = useAttendanceStore();
     const [debouncedSearch] = useDebounce(searchInput, 500);
-
+    console.log("voiceNumber in AttendanceMembersListComponent:", voiceNumber); // Debugging log
     // 2. Create a reference to the scrollable container
     const containerRef = useRef<HTMLDivElement>(null);
 
