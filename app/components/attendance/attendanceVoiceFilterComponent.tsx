@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CaretDownIcon } from "@phosphor-icons/react"
 import { useAttendanceStore } from "@/app/stores/attendance-store";
+import { Skeleton } from "@/components/ui/skeleton";
 type VoiceType = {
     voiceNumber: number,
     voiceAppellation: string
@@ -29,12 +30,16 @@ const voices: VoiceType[] = [{
 }];
 
 export default function VoicePickerComponent() {
-    const { voiceNumber, setVoiceNumber } = useAttendanceStore();
+    const { voiceNumber, setVoiceNumber, hasHydrated } = useAttendanceStore();
     const [chosenVoice, setChosenVoice] = useState<VoiceType>(voices[voiceNumber]);
     const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
 
     return <>
-        <Popover
+        {!hasHydrated && <div className="w-fit p-2.5 justify-center text-gray-200 cursor-pointer h-full px-4 border-gray-200 border rounded flex items-center gap-1">
+            <Skeleton className="w-10 h-4 rounded bg-gray-200" />
+            <CaretDownIcon size={18} />
+        </div>}
+        {hasHydrated && <Popover
             open={popoverOpen}
             onOpenChange={setPopoverOpen}
         >
@@ -51,8 +56,8 @@ export default function VoicePickerComponent() {
                         <span
                             key={voice.voiceNumber}
                             className={`cursor-pointer rounded p-2.5 px-4 w-full ${voice.voiceNumber === chosenVoice.voiceNumber
-                                    ? "bg-gray-100 text-black"
-                                    : "text-gray-600 hover:bg-gray-50"
+                                ? "bg-gray-100 text-black"
+                                : "text-gray-600 hover:bg-gray-50"
                                 }`}
                             onClick={() => {
                                 setChosenVoice(voice);
@@ -66,5 +71,6 @@ export default function VoicePickerComponent() {
                 </div>
             </PopoverContent>
         </Popover>
+        }
     </>
 }

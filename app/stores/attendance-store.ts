@@ -7,7 +7,7 @@ export type ActiveSection =
 
 export type ActiveSeeSectionFilter = "all" | "present" | "absent";
 
-  // const [actualDateMark, setActualDateMark] = useState<Date>(new Date());
+// const [actualDateMark, setActualDateMark] = useState<Date>(new Date());
 
 interface AttendanceStore {
     activeSection: ActiveSection;
@@ -24,6 +24,8 @@ interface AttendanceStore {
 
     setActualDateMark: (newDate: Date) => void;
     setActualDateView: (newDate: Date) => void;
+    hasHydrated: boolean;
+    setHasHydrated: (state: boolean) => void;
 }
 
 export const useAttendanceStore = create<AttendanceStore>()(
@@ -52,7 +54,7 @@ export const useAttendanceStore = create<AttendanceStore>()(
 
             activeSeeSectionFilter: "all",
             setActiveSeeSectionFilter: (value) => {
-                set ({
+                set({
                     activeSeeSectionFilter: value
                 })
             },
@@ -62,18 +64,33 @@ export const useAttendanceStore = create<AttendanceStore>()(
             actualDateView: new Date(),
 
             setActualDateMark: (value) => {
-                set ({
+                set({
                     actualDateMark: value
                 })
             },
             setActualDateView: (value) => {
-                set ({
+                set({
                     actualDateView: value
+                })
+            },
+            hasHydrated: false,
+            setHasHydrated: (state) => {
+                set({
+                    hasHydrated: state
                 })
             }
         }),
         {
             name: "attendance-store",
+            onRehydrateStorage: (state) => {
+                // Called before hydration starts
+                return (state, error) => {
+                    // Called after hydration completes
+                    if (!error) {
+                        state?.setHasHydrated(true);
+                    }
+                };
+            },
         }
     )
 );

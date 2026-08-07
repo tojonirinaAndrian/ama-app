@@ -14,8 +14,9 @@ import {
 import { CalendarIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useAttendanceStore } from "@/app/stores/attendance-store";
+import { Skeleton } from "@/components/ui/skeleton";
 export default function DatePickerSection() {
-  const { actualDateMark, setActualDateMark, actualDateView, setActualDateView } = useAttendanceStore();
+  const { actualDateMark, setActualDateMark, actualDateView, setActualDateView, hasHydrated } = useAttendanceStore();
 
   const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
@@ -24,7 +25,10 @@ export default function DatePickerSection() {
 
   return (
     <div className="flex items-center">
-      <div className="not-xl:hidden">
+      {!hasHydrated ? <div className="w-fit p-2.5 justify-center cursor-pointer h-full px-4 border-gray-200 text-gray-200 border rounded flex items-center gap-1">
+        <CalendarIcon size={18} />
+        <Skeleton className="w-15 h-4 rounded bg-gray-200" />
+      </div> : <><div className="not-xl:hidden">
         <Popover open={popoverOpen}
           onOpenChange={setPopoverOpen}
         >
@@ -51,38 +55,38 @@ export default function DatePickerSection() {
           </PopoverContent>
         </Popover>
       </div>
-      <div className="xl:hidden">
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogTrigger
-          // disabled={membresPresents.length > 0}
-          >
-            <p
-              className="p-2.5 px-4 border-gray-200 text-black border flex gap-2 items-center rounded-md cursor-pointer"
+        <div className="xl:hidden">
+          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            <DialogTrigger
+            // disabled={membresPresents.length > 0}
             >
-              <CalendarIcon size={18} />
+              <p
+                className="p-2.5 px-4 border-gray-200 text-black border flex gap-2 items-center rounded-md cursor-pointer"
+              >
+                <CalendarIcon size={18} />
                 <span>{new Date(actualDateMark).toLocaleDateString("en-GB")}</span>
-            </p>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader className="text-left">
-              <DialogTitle className="font-bold">
-                Choose a date
-              </DialogTitle>
-              <DialogDescription>
-                {"Le "}
-                <span className="xl:font-semibold font-bold">
-                  {activeSection === "mark" ? new Date(actualDateMark).toLocaleDateString("en-GB") : new Date(actualDateView).toLocaleDateString("en-GB")}
-                </span>
-              </DialogDescription>
-            </DialogHeader>
-            <CustomCalendar
-              closeComponent={() => setDialogOpen(false)}
-              currentlyChosenDate={activeSection === "mark" ? new Date(actualDateMark) : new Date(actualDateView)}
-              setCurrentlyChosenDate={activeSection === "mark" ? setActualDateMark : setActualDateView}
-            />
-          </DialogContent>
-        </Dialog>
-      </div>
+              </p>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader className="text-left">
+                <DialogTitle className="font-bold">
+                  Choose a date
+                </DialogTitle>
+                <DialogDescription>
+                  {"Le "}
+                  <span className="xl:font-semibold font-bold">
+                    {activeSection === "mark" ? new Date(actualDateMark).toLocaleDateString("en-GB") : new Date(actualDateView).toLocaleDateString("en-GB")}
+                  </span>
+                </DialogDescription>
+              </DialogHeader>
+              <CustomCalendar
+                closeComponent={() => setDialogOpen(false)}
+                currentlyChosenDate={activeSection === "mark" ? new Date(actualDateMark) : new Date(actualDateView)}
+                setCurrentlyChosenDate={activeSection === "mark" ? setActualDateMark : setActualDateView}
+              />
+            </DialogContent>
+          </Dialog>
+        </div></>}
     </div>
   );
 }
