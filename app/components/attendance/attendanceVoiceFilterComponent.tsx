@@ -31,9 +31,13 @@ const voices: VoiceType[] = [{
 
 export default function VoicePickerComponent() {
     const { voiceNumber, setVoiceNumber, hasHydrated } = useAttendanceStore();
-    const chosenVoice = hasHydrated
-        ? (voices[voiceNumber] ?? voices[0])
-        : voices[0];
+    // 1. Pick a safe default voice (the first one in your array)
+    let chosenVoice = voices[0];
+
+    // 2. If the store has loaded, use the saved voice number instead
+    if (hasHydrated && voices[voiceNumber]) {
+        chosenVoice = voices[voiceNumber];
+    }
 
     const [popoverOpen, setPopoverOpen] = useState<boolean>(false);
     console.log("voiceNumber in VoicePickerComponent:", voiceNumber); // Debugging log
