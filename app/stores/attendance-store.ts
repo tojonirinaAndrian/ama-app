@@ -82,7 +82,7 @@ export const useAttendanceStore = create<AttendanceStore>()(
         }),
         {
             name: "attendance-store",
-            onRehydrateStorage: (state) => {
+            onRehydrateStorage: () => {
                 // Called before hydration starts
                 return (state, error) => {
                     // Called after hydration completes

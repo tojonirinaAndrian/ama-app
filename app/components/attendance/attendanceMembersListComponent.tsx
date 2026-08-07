@@ -23,14 +23,6 @@ type MemberType = {
     image_url: string;
 };
 
-const voiceTypes = [
-    { voiceNumber: 1, voiceAppellation: 'soprano' },
-    { voiceNumber: 2, voiceAppellation: 'alto' },
-    { voiceNumber: 3, voiceAppellation: 'tenor' },
-    { voiceNumber: 4, voiceAppellation: 'bass' },
-    { voiceNumber: 5, voiceAppellation: 'musician' },
-];
-
 type MembersResponse = {
     members: MemberType[];
     total: number;
